@@ -7,7 +7,7 @@ const Login = () => {
 		email: '',
 		password: '',
 	});
-	const { handleLoginUser, isLoading, error } = useAuth();
+	const { handleLoginUser, handleGoogleSignIn, isLoading, error } = useAuth();
 	const location = useLocation();
 	const history = useHistory();
 
@@ -52,6 +52,10 @@ const Login = () => {
 			<p>
 				New user? <Link to='/register'>first register</Link>
 			</p>
+			<br />
+			<button onClick={() => handleGoogleSignIn(location, history)}>
+				Sign In With Google
+			</button>
 		</div>
 	);
 };

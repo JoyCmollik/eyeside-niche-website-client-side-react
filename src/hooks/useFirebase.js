@@ -1,21 +1,29 @@
 import { useState, useEffect } from 'react';
 import initializeAuthentication from '../components/Login/firebase/firebase.init';
+import useAxios from './useAxios';
 import {
 	getAuth,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
-	signOut,
+	GoogleAuthProvider,
+	signInWithPopup,
 	onAuthStateChanged,
 	updateProfile,
+	getIdToken,
+	signOut,
 } from 'firebase/auth';
 
 initializeAuthentication();
 
 const useFirebase = () => {
 	const [user, setUser] = useState(null);
+	const [isAdmin, setIsAdmin] = useState(false);
 	const [error, setError] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
+	const [token, setToken] = useState('');
+	const { client } = useAxios();
 
+	const googleProvider = new GoogleAuthProvider();
 	const auth = getAuth();
 
 	// register user
@@ -29,6 +37,9 @@ const useFirebase = () => {
 					displayName: name,
 				}).then(() => {});
 				console.log(result.user);
+
+				// saving data to the database
+				saveUser(email, name, 'POST');
 
 				// redirecting to home
 				history.replace('/home');
@@ -48,7 +59,31 @@ const useFirebase = () => {
 			.then((result) => {
 				setError('');
 				console.log(result.user);
-				history.replace(location.state.from);
+
+				// TODO: fix redirect
+				const redirectURI = location?.state?.from || '/home';
+				history.replace(location?.state?.from);
+			})
+			.catch((error) => {
+				setError(error.message);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	};
+
+	// login user with google
+	const handleGoogleSignIn = (location, history) => {
+		setIsLoading(true);
+		signInWithPopup(auth, googleProvider)
+			.then((result) => {
+				setError('');
+				const user = result.user;
+				saveUser(user.email, user.displayName, 'PUT');
+
+				// TODO: fix redirect
+				const redirectURI = location?.state?.from || '/home';
+				history.replace(location?.state?.from);
 			})
 			.catch((error) => {
 				setError(error.message);
@@ -63,6 +98,11 @@ const useFirebase = () => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			if (user) {
 				setUser(user);
+
+				// getting jwt token here
+				getIdToken(user).then((idToken) => {
+					setToken(idToken);
+				});
 			} else {
 				setUser(null);
 			}
@@ -71,6 +111,36 @@ const useFirebase = () => {
 
 		return () => unsubscribe;
 	}, [auth]);
+
+	// checking if the user is admin or not
+	useEffect(() => {
+		if (user) {
+			client.get(`/user/${user.email}`).then((response) => {
+				const adminStatus = response.data.admin;
+				setIsAdmin(adminStatus);
+			});
+		}
+	}, [user?.email]);
+
+	// save user to the database according to the given method
+	const saveUser = (email, displayName, method) => {
+		const registeredUser = { email, displayName };
+
+		switch (method) {
+			case 'POST':
+				client.post('/adduser', registeredUser).then((response) => {
+					console.log(response.data);
+				});
+				break;
+			case 'PUT':
+				client.put('/adduser', registeredUser).then((response) => {
+					console.log(response.data);
+				});
+				break;
+			default:
+				break;
+		}
+	};
 
 	// signout user
 	const handleSignOut = () => {
@@ -89,10 +159,13 @@ const useFirebase = () => {
 
 	return {
 		user,
+		isAdmin,
 		error,
+		token,
 		isLoading,
 		handleRegisterUser,
 		handleLoginUser,
+		handleGoogleSignIn,
 		handleSignOut,
 	};
 };

@@ -14,7 +14,7 @@ import Dashboard from './components/Dashboard/Dashboard/Dashboard';
 
 function App() {
 	return (
-		<div className='App'>
+		<>
 			<Router>
 				<Switch>
 					<Redirect exact from='/' to='/home' />
@@ -35,7 +35,7 @@ function App() {
 					</Route>
 				</Switch>
 			</Router>
-		</div>
+		</>
 	);
 }
 

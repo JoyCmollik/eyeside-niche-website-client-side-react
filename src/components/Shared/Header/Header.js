@@ -15,8 +15,12 @@ const Header = () => {
 			<div className='flex space-x-2 items-center'>
 				<NavLink to='/home'>Home</NavLink>
 				<NavLink to='/explore'>explore glasses</NavLink>
-				<NavLink to='login'>login</NavLink>
-				{user && <button onClick={handleSignOut}>signout</button>}
+				{user && <NavLink to='dashboard'>dashboard</NavLink>}
+				{user ? (
+					<button onClick={handleSignOut}>signout</button>
+				) : (
+					<NavLink to='login'>login</NavLink>
+				)}
 				{user?.displayName && <p>{user.displayName}</p>}
 			</div>
 		</header>
