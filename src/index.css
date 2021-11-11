@@ -14,3 +14,7 @@ h4,
 .font-lora {
 	font-family: 'Lora', serif;
 }
+
+.btn {
+	@apply px-5 py-3 bg-black text-white rounded-3xl;
+}
