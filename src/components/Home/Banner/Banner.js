@@ -27,7 +27,9 @@ const Banner = () => {
 							off
 						</h4>
 						<Link to='/explore'>
-							<button className='btn'>SHOP ALL GLASSES</button>
+							<button className='btn bg-black'>
+								SHOP ALL GLASSES
+							</button>
 						</Link>
 					</div>
 				</div>

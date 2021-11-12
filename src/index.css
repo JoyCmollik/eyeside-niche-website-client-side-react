@@ -16,5 +16,9 @@ h4,
 }
 
 .btn {
-	@apply px-5 py-3 bg-black text-white rounded-3xl;
+	@apply px-5 py-3 uppercase text-white rounded-3xl;
+}
+
+.modal-input {
+	@apply border px-4 py-2 rounded-lg text-gray-500 focus-within:text-black outline-none focus:ring-2 focus:ring-primary;
 }

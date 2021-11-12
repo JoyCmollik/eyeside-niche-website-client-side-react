@@ -11,6 +11,7 @@ import Login from './components/Login/Login/Login';
 import Register from './components/Login/Register/Register';
 import PrivateRoute from './components/Shared/PrivateRoute/PrivateRoute';
 import Dashboard from './components/Dashboard/Dashboard/Dashboard';
+import GlassDetailPage from './components/ExploreGlasses/GlassDetailPage/GlassDetailPage';
 
 function App() {
 	return (
@@ -23,6 +24,9 @@ function App() {
 					</Route>
 					<PrivateRoute path='/explore'>
 						<ExploreGlasses />
+					</PrivateRoute>
+					<PrivateRoute path='/eyeglass'>
+						<GlassDetailPage />
 					</PrivateRoute>
 					<PrivateRoute path='/dashboard'>
 						<Dashboard />

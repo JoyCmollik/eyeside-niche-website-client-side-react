@@ -11,10 +11,10 @@ const Dashboard = () => {
 
 	return (
 		<div className='grid grid-cols-12 h-screen'>
-			<div className='col-span-2 bg-black'>
+			<div className='col-span-3'>
 				<DashboardSidebar url={url} />
 			</div>
-			<div className='col-span-10 bg-gray-400'>
+			<div className='col-span-9 bg-gray-400'>
 				<Switch>
 					<Route exact path={`${path}`}>
 						<Pay />
