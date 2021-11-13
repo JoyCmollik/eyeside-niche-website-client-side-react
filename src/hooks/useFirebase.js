@@ -61,8 +61,8 @@ const useFirebase = () => {
 				console.log(result.user);
 
 				// TODO: fix redirect
-				const redirectURI = location?.state?.from || '/home';
-				history.replace(location?.state?.from);
+				const redirectURI = location.state?.from || '/home';
+				history.replace(redirectURI);
 			})
 			.catch((error) => {
 				setError(error.message);
@@ -161,6 +161,7 @@ const useFirebase = () => {
 		user,
 		isAdmin,
 		error,
+		setError,
 		token,
 		isLoading,
 		handleRegisterUser,

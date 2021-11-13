@@ -1,23 +1,107 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
+import { BsFillCreditCard2FrontFill, BsBagCheckFill } from 'react-icons/bs';
+import {
+	MdRateReview,
+	MdAdminPanelSettings,
+	MdLibraryAdd,
+	MdLogout,
+} from 'react-icons/md';
+import { FaUsersCog, FaHome } from 'react-icons/fa';
 
-const DashboardSidebar = ({ url }) => {
-	const { isAdmin } = useAuth();
+const DashboardSidebar = ({ isDrawerOpen, setIsDrawerOpen, url }) => {
+	const { user, isAdmin } = useAuth();
+	const userLinks = [
+		{ icon: <FaHome />, to: '/home', text: 'Home' },
+		{ icon: <BsFillCreditCard2FrontFill />, to: `${url}`, text: 'Pay' },
+		{ icon: <BsBagCheckFill />, to: `${url}/myorders`, text: 'My Orders' },
+		{ icon: <MdRateReview />, to: `${url}/review`, text: 'Review' },
+	];
+	const adminLinks = [
+		{ icon: <FaHome />, to: '/home', text: 'Home' },
+		{
+			icon: <FaUsersCog />,
+			to: `${url}/manageorders`,
+			text: 'Manage All Orders',
+		},
+		{
+			icon: <MdAdminPanelSettings />,
+			to: `${url}/makeadmin`,
+			text: 'Make Admin',
+		},
+		{
+			icon: <MdLibraryAdd />,
+			to: `${url}/addproduct`,
+			text: 'Add a Product',
+		},
+	];
 
 	return (
-		<div className='w-full p-4 text-white flex flex-col space-y-4'>
-			<h1>Dashboard Sidebar</h1>
-			<NavLink to={`${url}`}>Pay</NavLink>
-			<NavLink to={`${url}/myorders`}>My Orders</NavLink>
-			<NavLink to={`${url}/review`}>Review</NavLink>
-			{isAdmin && (
-				<NavLink to={`${url}/manageorders`}>Manage All Orders</NavLink>
-			)}
-			{isAdmin && <NavLink to={`${url}/makeadmin`}>Make Admin</NavLink>}
-			{isAdmin && (
-				<NavLink to={`${url}/addproduct`}>Add a Product</NavLink>
-			)}
+		<div
+			className='h-screen w-28 md:w-full flex flex-col justify-between items-center px-4 space-y-4 bg-light md:bg-white'
+			style={{ zIndex: '9999' }}
+		>
+			<div className=''>
+				<div className='py-4 mb-10'>
+					<h1 className='hidden md:block text-2xl'>
+						eye<span className='text-primary'>Side</span>
+					</h1>
+					<button onClick={() => setIsDrawerOpen(false)}>
+						Close
+					</button>
+				</div>
+				<div
+					onClick={() => setIsDrawerOpen(false)}
+					className='flex flex-col space-y-2'
+				>
+					{/* user links */}
+					{isAdmin &&
+						userLinks.map(({ icon, to, text }, index) => (
+							<NavLink
+								activeClassName='border-brand text-brand'
+								className='md:space-x-2 flex flex-col md:flex-row items-center text-gray-500 border border-white hover:bg-red-100 hover:text-brand transition duration-300 rounded-lg p-1 md:px-4 md:py-2'
+								key={index}
+								exact
+								to={to}
+							>
+								<span className='text-xl'>{icon}</span>
+								<span className='text-xs text-center md:text-base md:text-left'>
+									{text}
+								</span>
+							</NavLink>
+						))}
+					{/* admin links */}
+					{isAdmin &&
+						adminLinks.map(({ icon, to, text }, index) => (
+							<NavLink
+								activeClassName='border-brand text-brand'
+								className='md:space-x-2 flex flex-col md:flex-row items-center text-gray-500 border border-white hover:bg-red-100 hover:text-brand transition duration-300 rounded-lg p-1 md:px-4 md:py-2'
+								key={index}
+								exact
+								to={to}
+							>
+								<span className='text-xl'>{icon}</span>
+								<span className='text-xs text-center md:text-base md:text-left'>
+									{text}
+								</span>
+							</NavLink>
+						))}
+				</div>
+			</div>
+			<div
+				onClick={() => setIsDrawerOpen(false)}
+				className='pb-10 w-full'
+			>
+				<button className='md:space-x-2 flex flex-col md:flex-row justify-center items-center text-gray-500 border border-white hover:bg-red-100 hover:text-brand transition duration-300 rounded-lg p-1 md:px-4 md:py-2'>
+					<span className='text-xl'>
+						<MdLogout />
+					</span>
+					<span className='text-xs text-center md:text-base md:text-left'>
+						Log Out
+					</span>
+				</button>
+			</div>
 		</div>
 	);
 };

@@ -1,10 +1,12 @@
 import React from 'react';
 
-const Pay = ({ isOpen, setIsOpen }) => {
+const Pay = () => {
 	return (
-		<div>
-			<button onClick={() => setIsOpen(!isOpen)}>open</button>
-			<h4>Payment is coming soon!</h4>
+		<div className='w-full shadow text-center p-4 rounded-lg'>
+			<h4 className='text-xl'>
+				<span className='text-brand'>Hang On!</span> Payment system is
+				coming soon!
+			</h4>
 		</div>
 	);
 };
