@@ -18,9 +18,9 @@ const Product = ({ product }) => {
 	} = product;
 
 	const productLinks = [
-		{ to: '/', icon: <FiSearch /> },
-		{ to: '/', icon: <FiShoppingCart /> },
-		{ to: '/', icon: <FiHeart /> },
+		{ to: `/eyeglass/${_id}`, icon: <FiSearch /> },
+		{ to: `/eyeglass/${_id}`, icon: <FiShoppingCart /> },
+		{ to: `/eyeglass/${_id}`, icon: <FiHeart /> },
 		{ to: `/eyeglass/${_id}`, icon: <FiArrowRight /> },
 	];
 

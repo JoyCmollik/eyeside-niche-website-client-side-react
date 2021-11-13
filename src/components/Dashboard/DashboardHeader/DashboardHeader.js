@@ -2,6 +2,7 @@ import React from 'react';
 import { BsSearch } from 'react-icons/bs';
 import useAuth from '../../../hooks/useAuth';
 import { BsMenuButtonWideFill } from 'react-icons/bs';
+import { Avatar } from '@mui/material';
 
 const DashboardHeader = ({ isDrawerOpen, setIsDrawerOpen }) => {
 	const { user } = useAuth();
@@ -28,10 +29,10 @@ const DashboardHeader = ({ isDrawerOpen, setIsDrawerOpen }) => {
 			</div>
 			<div className='flex items-center space-x-2'>
 				<h5 className='font-light text-sm'>{user?.displayName}</h5>
-				<img
-					className='object-cover h-10 rounded-full'
+				<Avatar
+					alt={user?.name}
 					src={user?.photoURL}
-					alt=''
+					sx={{ width: 40, height: 40 }}
 				/>
 			</div>
 		</div>

@@ -1,3 +1,4 @@
+import { Avatar } from '@mui/material';
 import React from 'react';
 
 const Order = ({ order, handleStatus, handleDeleteOrder }) => {
@@ -31,10 +32,10 @@ const Order = ({ order, handleStatus, handleDeleteOrder }) => {
 			<td className='px-6 py-4 whitespace-nowrap'>
 				<div className='flex items-center'>
 					<div className='flex-shrink-0 h-10 w-10'>
-						<img
-							className='h-10 w-10 rounded-full'
+						<Avatar
+							alt={user.name}
 							src={user.user_img}
-							alt=''
+							sx={{ width: 40, height: 40 }}
 						/>
 					</div>
 					<div className='ml-4'>
@@ -64,26 +65,12 @@ const Order = ({ order, handleStatus, handleDeleteOrder }) => {
 			<td className='px-6 py-4 whitespace-nowrap'>
 				<select
 					onChange={handleStatusUpdate}
+					defaultValue={order_status}
 					className='pl-2 py-1 rounded-lg bg-green-100 text-green-700 outline-none'
 				>
-					<option
-						selected={order_status === 'pending'}
-						value='pending'
-					>
-						pending
-					</option>
-					<option
-						selected={order_status === 'approved'}
-						value='approved'
-					>
-						approved
-					</option>
-					<option
-						selected={order_status === 'processing'}
-						value='processing'
-					>
-						processing
-					</option>
+					<option value='pending'>pending</option>
+					<option value='approved'>approved</option>
+					<option value='processing'>processing</option>
 				</select>
 			</td>
 			{/* actions */}

@@ -10,8 +10,8 @@ import {
 } from 'react-icons/md';
 import { FaUsersCog, FaHome } from 'react-icons/fa';
 
-const DashboardSidebar = ({ isDrawerOpen, setIsDrawerOpen, url }) => {
-	const { user, isAdmin } = useAuth();
+const DashboardSidebar = ({ setIsDrawerOpen, url }) => {
+	const { isAdmin, handleSignOut } = useAuth();
 	const userLinks = [
 		{ icon: <FaHome />, to: '/home', text: 'Home' },
 		{ icon: <BsFillCreditCard2FrontFill />, to: `${url}`, text: 'Pay' },
@@ -22,7 +22,7 @@ const DashboardSidebar = ({ isDrawerOpen, setIsDrawerOpen, url }) => {
 		{ icon: <FaHome />, to: '/home', text: 'Home' },
 		{
 			icon: <FaUsersCog />,
-			to: `${url}/manageorders`,
+			to: `${url}`,
 			text: 'Manage All Orders',
 		},
 		{
@@ -47,7 +47,10 @@ const DashboardSidebar = ({ isDrawerOpen, setIsDrawerOpen, url }) => {
 					<h1 className='hidden md:block text-2xl'>
 						eye<span className='text-primary'>Side</span>
 					</h1>
-					<button onClick={() => setIsDrawerOpen(false)}>
+					<button
+						className='md:hidden'
+						onClick={() => setIsDrawerOpen(false)}
+					>
 						Close
 					</button>
 				</div>
@@ -56,7 +59,7 @@ const DashboardSidebar = ({ isDrawerOpen, setIsDrawerOpen, url }) => {
 					className='flex flex-col space-y-2'
 				>
 					{/* user links */}
-					{isAdmin &&
+					{!isAdmin &&
 						userLinks.map(({ icon, to, text }, index) => (
 							<NavLink
 								activeClassName='border-brand text-brand'
@@ -93,7 +96,10 @@ const DashboardSidebar = ({ isDrawerOpen, setIsDrawerOpen, url }) => {
 				onClick={() => setIsDrawerOpen(false)}
 				className='pb-10 w-full'
 			>
-				<button className='md:space-x-2 flex flex-col md:flex-row justify-center items-center text-gray-500 border border-white hover:bg-red-100 hover:text-brand transition duration-300 rounded-lg p-1 md:px-4 md:py-2'>
+				<button
+					onClick={handleSignOut}
+					className='md:space-x-2 flex flex-col md:flex-row justify-center items-center text-gray-500 border border-white hover:bg-red-100 hover:text-brand transition duration-300 rounded-lg p-1 md:px-4 md:py-2'
+				>
 					<span className='text-xl'>
 						<MdLogout />
 					</span>

@@ -3,21 +3,30 @@ import Rating from '@mui/material/Rating';
 import useAuth from '../../../../hooks/useAuth';
 import useAxios from '../../../../hooks/useAxios';
 
-const Review = () => {
+const GiveReview = () => {
 	const commentRef = useRef('');
 	const [rating, setRating] = useState(0);
 	const { user } = useAuth();
 	const { client } = useAxios();
 
 	const handleReviewSubmit = () => {
-		// TODO: send review to server
+		// send review to server
 		const data = {};
 		data.review_user_img = user.photoURL;
 		data.review_user_name = user.displayName;
 		data.review_rating = rating;
 		data.review_comment = commentRef.current.value;
 
-		console.log(data);
+		client
+			.post('/addreview', data)
+			.then((response) => {
+				commentRef.current.value = '';
+				setRating(0);
+				console.log(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 
 	return (
@@ -50,4 +59,4 @@ const Review = () => {
 	);
 };
 
-export default Review;
+export default GiveReview;

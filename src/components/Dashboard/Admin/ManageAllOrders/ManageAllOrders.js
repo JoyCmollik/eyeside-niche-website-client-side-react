@@ -74,7 +74,7 @@ const ManageAllOrders = () => {
 
 	return (
 		<div className='space-y-4 flex flex-col items-start'>
-			<div className='w-full'>
+			<div className='w-full space-y-4'>
 				<h5 className='text-xl font-bold capitalize'>
 					Orders Statistics
 				</h5>
@@ -117,7 +117,7 @@ const ManageAllOrders = () => {
 					</div>
 				</div>
 			</div>
-			<div className='w-full'>
+			<div className='w-full space-y-4'>
 				<h5 className='text-xl font-bold capitalize'>Orders</h5>
 				{allOrders && (
 					<AllOrdersTable

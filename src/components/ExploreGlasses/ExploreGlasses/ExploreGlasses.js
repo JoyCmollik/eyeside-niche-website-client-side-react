@@ -29,7 +29,7 @@ const ExploreGlasses = () => {
 			<Header />
 			<div className='container mx-auto'>
 				<div className='lg:grid grid-cols-12'>
-					<div className='hidden lg:block col-span-4'>
+					<div className='hidden lg:block col-span-2'>
 						<h5 className='uppercase text-xl font-light mb-8'>
 							filter by
 						</h5>
@@ -50,7 +50,7 @@ const ExploreGlasses = () => {
 							</div>
 						</div>
 					</div>
-					<div className='col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center'>
+					<div className='col-span-12 lg:col-span-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center'>
 						{products &&
 							products.map((product) => (
 								<Product key={product._id} product={product} />

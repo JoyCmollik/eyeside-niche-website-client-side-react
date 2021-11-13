@@ -32,7 +32,6 @@ const AddAProduct = () => {
 			const newColorList = colorsAvailable.filter(
 				(colorItem) => colorItem !== color
 			);
-			console.log(color, newColorList);
 			setColorList(newColorList);
 		} else {
 			colorsAvailable.push(color);
@@ -50,7 +49,6 @@ const AddAProduct = () => {
 		admin
 			.post('/addproduct', data)
 			.then((response) => {
-				console.log(response.data);
 				reset();
 			})
 			.catch((error) => {
@@ -68,7 +66,7 @@ const AddAProduct = () => {
 					{/* form grid */}
 					<div className='grid grid-cols-12 text-sm gap-4'>
 						{/* input */}
-						<div className='col-span-6 space-y-2'>
+						<div className='col-span-12 lg:col-span-6 space-y-2'>
 							<label className='uppercase text-base font-semibold'>
 								Product Title*
 							</label>
@@ -82,7 +80,7 @@ const AddAProduct = () => {
 							/>
 						</div>
 						{/* input */}
-						<div className='col-span-6 space-y-2'>
+						<div className='col-span-12 lg:col-span-6 space-y-2'>
 							<label className='uppercase text-base font-semibold'>
 								Product Image URL*
 							</label>
@@ -96,7 +94,7 @@ const AddAProduct = () => {
 							/>
 						</div>
 						{/* input */}
-						<div className='col-span-6 space-y-2'>
+						<div className='col-span-12 lg:col-span-6 space-y-2'>
 							<label className='uppercase text-base font-semibold'>
 								Product Description*
 							</label>
@@ -110,7 +108,7 @@ const AddAProduct = () => {
 							/>
 						</div>
 						{/* input */}
-						<div className='col-span-6 space-y-2'>
+						<div className='col-span-12 lg:col-span-6 space-y-2'>
 							<label className='uppercase text-base font-semibold'>
 								Product More Images
 							</label>
@@ -122,21 +120,20 @@ const AddAProduct = () => {
 							/>
 						</div>
 						{/* input */}
-						<div className='col-span-3 space-y-2'>
+						<div className='col-span-12 md:col-span-6 lg:col-span-3 space-y-2'>
 							<label className='uppercase text-base font-semibold'>
 								Product Price*
 							</label>
 							<input
 								className='w-full bg-light border border-gray-200 p-2 rounded outline-none text-gray-500 focus-within:text-gray-900'
 								placeholder='49'
-								type='number'
 								{...register('product_price', {
 									required: true,
 								})}
 							/>
 						</div>
 						{/* input */}
-						<div className='col-span-3 space-y-2'>
+						<div className='col-span-12 md:col-span-6 lg:col-span-3 space-y-2'>
 							<label className='uppercase text-base font-semibold'>
 								Product Category*
 							</label>
@@ -158,7 +155,7 @@ const AddAProduct = () => {
 							</select>
 						</div>
 						{/* input */}
-						<div className='col-span-6 space-y-2'>
+						<div className='col-span-12 lg:col-span-6 space-y-2'>
 							<label className='uppercase text-base font-semibold'>
 								Product Available Colors
 							</label>

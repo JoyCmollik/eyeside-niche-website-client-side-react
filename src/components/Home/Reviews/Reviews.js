@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SectionTitle from '../../Shared/SectionTitle/SectionTitle';
 import Review from '../Review/Review';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,11 +7,21 @@ import 'swiper/swiper.min.css';
 
 // import Swiper core and required modules
 import SwiperCore, { Autoplay } from 'swiper';
+import useAxios from '../../../hooks/useAxios';
 
 // install Swiper modules
 SwiperCore.use([Autoplay]);
 
 const Reviews = () => {
+	const [reviews, setReviews] = useState();
+	const { client } = useAxios();
+
+	useEffect(() => {
+		client.get('/reviews').then((response) => {
+			setReviews(response.data);
+		});
+	}, []);
+
 	return (
 		<div className='container mx-auto space-y-10'>
 			<SectionTitle
@@ -21,7 +31,7 @@ const Reviews = () => {
 			<Swiper
 				loop={true}
 				autoplay={{
-					delay: 3500,
+					delay: 2500,
 					disableOnInteraction: false,
 				}}
 				grabCursor={true}
@@ -40,18 +50,12 @@ const Reviews = () => {
 					},
 				}}
 			>
-				<SwiperSlide>
-					<Review />
-				</SwiperSlide>
-				<SwiperSlide>
-					<Review />
-				</SwiperSlide>
-				<SwiperSlide>
-					<Review />
-				</SwiperSlide>
-				<SwiperSlide>
-					<Review />
-				</SwiperSlide>
+				{reviews &&
+					reviews.map((review) => (
+						<SwiperSlide key={review._id}>
+							<Review review={review} />
+						</SwiperSlide>
+					))}
 			</Swiper>
 		</div>
 	);
