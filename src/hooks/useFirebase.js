@@ -83,7 +83,7 @@ const useFirebase = () => {
 
 				// TODO: fix redirect
 				const redirectURI = location?.state?.from || '/home';
-				history.replace(location?.state?.from);
+				history.replace(redirectURI);
 			})
 			.catch((error) => {
 				setError(error.message);

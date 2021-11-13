@@ -4,6 +4,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
+import { useSnackbar } from 'notistack';
 import useAxios from '../../../hooks/useAxios';
 
 const style = {
@@ -21,6 +22,7 @@ const OrderModal = (props) => {
 		props;
 	const { register, handleSubmit } = useForm();
 	const { user } = useAuth();
+	const { enqueueSnackbar } = useSnackbar();
 	const { client } = useAxios();
 
 	// sending order data to server
@@ -43,14 +45,19 @@ const OrderModal = (props) => {
 		client
 			.post('/placeorder', order)
 			.then((response) => {
-				console.log(response.data);
+				// alert
+				enqueueSnackbar('Order Placed Successfully!', {
+					variant: 'success',
+					anchorOrigin: {
+						vertical: 'bottom',
+						horizontal: 'right',
+					},
+				});
 				setIsOrderOpen(false);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
-
-		console.log(order);
 	};
 
 	return (

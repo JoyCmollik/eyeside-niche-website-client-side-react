@@ -4,6 +4,9 @@ import approvedIcon from '../../../../images/approved.png';
 import statusIcon from '../../../../images/status.png';
 import AllOrdersTable from '../AllOrdersTable/AllOrdersTable';
 import useAxios from '../../../../hooks/useAxios';
+import { useSnackbar } from 'notistack';
+import ConfirmDialog from '../../../Shared/ConfirmDialog/ConfirmDialog';
+import { CircularProgress } from '@mui/material';
 
 const ManageAllOrders = () => {
 	const [allOrders, setAllOrders] = useState([]);
@@ -11,6 +14,10 @@ const ManageAllOrders = () => {
 	const [approvedTotal, setApprovedTotal] = useState(0);
 	const { admin } = useAxios();
 	const [triggerFetching, setTriggerFetching] = useState(true);
+	const { enqueueSnackbar } = useSnackbar();
+	const [open, setOpen] = useState(false);
+	const [deleteId, setDeleteId] = useState(null);
+	const [isNoOrder, setIsNoOrder] = useState(false);
 
 	// fetching all the orders
 	useEffect(() => {
@@ -18,6 +25,7 @@ const ManageAllOrders = () => {
 			.get('/orders')
 			.then((response) => {
 				const orders = response.data;
+				orders.length ? setIsNoOrder(false) : setIsNoOrder(true);
 				setTriggerFetching(false);
 				setAllOrders(orders);
 
@@ -41,12 +49,19 @@ const ManageAllOrders = () => {
 
 	// updating the status
 	const handleStatus = (status, _id) => {
-		console.log(status, _id);
 		const update = { status };
 
 		admin
 			.put(`/status/${_id}`, update)
 			.then((response) => {
+				// showing alert
+				enqueueSnackbar(`Status to ${status} originated!`, {
+					variant: 'info',
+					anchorOrigin: {
+						vertical: 'bottom',
+						horizontal: 'right',
+					},
+				});
 				setTriggerFetching(true);
 			})
 			.catch((error) => {
@@ -56,20 +71,9 @@ const ManageAllOrders = () => {
 
 	// deleting order
 	const handleDeleteOrder = (_id) => {
-		console.log(_id);
-		const confirm = window.confirm('are you sure to delete?');
-
-		if (confirm) {
-			admin
-				.delete(`/order/${_id}`)
-				.then((response) => {
-					setTriggerFetching(true);
-					console.log(response.data);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		}
+		setDeleteId(_id);
+		// triggering alert dialog
+		setOpen(true);
 	};
 
 	return (
@@ -119,14 +123,33 @@ const ManageAllOrders = () => {
 			</div>
 			<div className='w-full space-y-4'>
 				<h5 className='text-xl font-bold capitalize'>Orders</h5>
-				{allOrders && (
+				{allOrders.length ? (
 					<AllOrdersTable
 						orders={allOrders}
 						handleStatus={handleStatus}
 						handleDeleteOrder={handleDeleteOrder}
 					/>
+				) : (
+					<div className='w-full flex justify-center items-center h-96'>
+						{!isNoOrder ? (
+							<CircularProgress color='inherit' />
+						) : (
+							<p className='flex-grow self-start p-4 bg-red-100 text-red-500 rounded-lg'>
+								No Order Data Available
+							</p>
+						)}
+					</div>
 				)}
 			</div>
+			{deleteId && (
+				<ConfirmDialog
+					open={open}
+					deleteId={deleteId}
+					setOpen={setOpen}
+					setDeleteId={setDeleteId}
+					setTriggerFetching={setTriggerFetching}
+				/>
+			)}
 		</div>
 	);
 };

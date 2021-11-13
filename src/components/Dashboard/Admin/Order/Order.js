@@ -1,12 +1,13 @@
+import React, { useEffect } from 'react';
 import { Avatar } from '@mui/material';
-import React from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Order = ({ order, handleStatus, handleDeleteOrder }) => {
 	const {
 		_id,
 		user,
 		order_time,
-		order_product_id,
 		order_product_quantity,
 		order_status,
 		order_product_title,
@@ -18,8 +19,18 @@ const Order = ({ order, handleStatus, handleDeleteOrder }) => {
 		handleStatus(value, _id);
 	};
 
+	useEffect(() => {
+		AOS.init({
+			duration: 2000,
+		});
+	}, []);
+
 	return (
-		<tr>
+		<tr
+			data-aos='fade-up'
+			data-aos-anchor-placement='top-bottom'
+			data-aos-delay='100'
+		>
 			{/* order id plus time */}
 			<td className='px-6 py-4 whitespace-nowrap'>
 				<div className='text-sm text-gray-900'>{_id}</div>

@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import overviewImg from '../../../images/overview.jpg';
 import overviewImg2 from '../../../images/overview2.jpg';
 
 const Overview = () => {
+	useEffect(() => {
+		AOS.init({
+			duration: 2000,
+		});
+	}, []);
 	return (
 		<div className='lg:grid grid-cols-2'>
 			<div
+				data-aos='fade-right'
 				className='flex flex-col items-center pt-20 space-y-5'
 				style={{
 					background: `linear-gradient(rgba(255,255,255, 0.7), rgba(255,255,255, 0.19)) , url(${overviewImg2}) center/cover no-repeat`,
@@ -30,7 +38,7 @@ const Overview = () => {
 					</Link>
 				</div>
 			</div>
-			<div className='overflow-hidden'>
+			<div data-aos='fade-left' className='overflow-hidden'>
 				<img
 					className='object-cover w-full transform hover:scale-110 transition duration-300'
 					style={{ height: '70vh' }}

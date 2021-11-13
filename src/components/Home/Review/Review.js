@@ -17,7 +17,7 @@ const Review = (props) => {
 				<h5 className='text-lg'>
 					{review_user_name.split(' ', 3).join(' ')}
 				</h5>
-				<Rating value={review_rating} readOnly />
+				<Rating value={review_rating} precision={0.5} readOnly />
 			</div>
 
 			<p className='text-sm text-gray-500'>

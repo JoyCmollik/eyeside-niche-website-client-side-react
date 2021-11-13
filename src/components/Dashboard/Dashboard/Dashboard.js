@@ -39,7 +39,7 @@ const Dashboard = () => {
 				/>
 				<Switch>
 					{!isAdmin && (
-						<div className=''>
+						<>
 							<Route exact path={`${path}`}>
 								<Pay />
 							</Route>
@@ -49,10 +49,10 @@ const Dashboard = () => {
 							<Route path={`${path}/review`}>
 								<GiveReview />
 							</Route>
-						</div>
+						</>
 					)}
 					{isAdmin && (
-						<div className=''>
+						<>
 							<AdminRoute exact path={`${path}`}>
 								<ManageAllOrders />
 							</AdminRoute>
@@ -62,7 +62,7 @@ const Dashboard = () => {
 							<AdminRoute path={`${path}/addproduct`}>
 								<AddAProduct />
 							</AdminRoute>
-						</div>
+						</>
 					)}
 				</Switch>
 			</div>

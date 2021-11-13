@@ -1,11 +1,13 @@
 import React, { useRef, useState } from 'react';
 import Rating from '@mui/material/Rating';
 import useAuth from '../../../../hooks/useAuth';
+import { useSnackbar } from 'notistack';
 import useAxios from '../../../../hooks/useAxios';
 
 const GiveReview = () => {
 	const commentRef = useRef('');
 	const [rating, setRating] = useState(0);
+	const { enqueueSnackbar } = useSnackbar();
 	const { user } = useAuth();
 	const { client } = useAxios();
 
@@ -22,7 +24,14 @@ const GiveReview = () => {
 			.then((response) => {
 				commentRef.current.value = '';
 				setRating(0);
-				console.log(response.data);
+				// alert
+				enqueueSnackbar('Your review has been received!', {
+					variant: 'success',
+					anchorOrigin: {
+						vertical: 'bottom',
+						horizontal: 'right',
+					},
+				});
 			})
 			.catch((error) => {
 				console.log(error);

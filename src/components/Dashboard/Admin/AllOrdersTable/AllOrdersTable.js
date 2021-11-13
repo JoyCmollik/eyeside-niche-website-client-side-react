@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Order from '../Order/Order';
 
 const headingList = [
@@ -41,14 +41,17 @@ const AllOrdersTable = ({ orders, handleStatus, handleDeleteOrder }) => {
 								</tr>
 							</thead>
 							<tbody className='bg-white divide-y divide-gray-200'>
-								{orders.map((order) => (
-									<Order
-										key={order._id}
-										order={order}
-										handleStatus={handleStatus}
-										handleDeleteOrder={handleDeleteOrder}
-									/>
-								))}
+								{orders &&
+									orders.map((order) => (
+										<Order
+											key={order._id}
+											order={order}
+											handleStatus={handleStatus}
+											handleDeleteOrder={
+												handleDeleteOrder
+											}
+										/>
+									))}
 							</tbody>
 						</table>
 					</div>

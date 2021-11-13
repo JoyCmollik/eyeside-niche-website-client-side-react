@@ -2065,7 +2065,7 @@
     "prop-types" "^15.7.2"
     "react-is" "^17.0.2"
 
-"@mui/material@^5.1.0":
+"@mui/material@^5.0.0", "@mui/material@^5.1.0":
   "integrity" "sha512-K76v7zRhpJToInSI8sRcEmTwpVFBZ223VIusjZRKXN8JzX+PuErG7skfa1yUuhc3f4VEqcYYUw0LvI+DJJ05eg=="
   "resolved" "https://registry.npmjs.org/@mui/material/-/material-5.1.0.tgz"
   "version" "5.1.0"
@@ -3455,6 +3455,15 @@
     "normalize-path" "^3.0.0"
     "picomatch" "^2.0.4"
 
+"aos@^2.3.4":
+  "integrity" "sha512-zh/ahtR2yME4I51z8IttIt4lC1Nw0ktsFtmeDzID1m9naJnWXhCoARaCgNOGXb5CLy3zm+wqmRAEgMYB5E2HUw=="
+  "resolved" "https://registry.npmjs.org/aos/-/aos-2.3.4.tgz"
+  "version" "2.3.4"
+  dependencies:
+    "classlist-polyfill" "^1.0.3"
+    "lodash.debounce" "^4.0.6"
+    "lodash.throttle" "^4.0.1"
+
 "appdirsjs@^1.2.4":
   "integrity" "sha512-D8wJNkqMCeQs3kLasatELsddox/Xqkhp+J07iXGyL54fVN7oc+nmNfYzGuCs1IEP6uBw+TfpuO3JKwc+lECy4w=="
   "resolved" "https://registry.npmjs.org/appdirsjs/-/appdirsjs-1.2.6.tgz"
@@ -4605,6 +4614,11 @@
     "isobject" "^3.0.0"
     "static-extend" "^0.1.1"
 
+"classlist-polyfill@^1.0.3":
+  "integrity" "sha1-k1vC39lFiodrJ5YXUUY4vKqWSi4="
+  "resolved" "https://registry.npmjs.org/classlist-polyfill/-/classlist-polyfill-1.2.0.tgz"
+  "version" "1.2.0"
+
 "clean-css@^4.2.3":
   "integrity" "sha512-VcMWDN54ZN/DS+g58HYL5/n4Zrqe8vHJpGA8KdgUXFU4fuP/aHNw8eld9SyEIyabIMJX/0RaY/fplOo5hYLSFA=="
   "resolved" "https://registry.npmjs.org/clean-css/-/clean-css-4.2.3.tgz"
@@ -4670,7 +4684,7 @@
   "resolved" "https://registry.npmjs.org/clone/-/clone-1.0.4.tgz"
   "version" "1.0.4"
 
-"clsx@^1.1.1":
+"clsx@^1.1.0", "clsx@^1.1.1":
   "integrity" "sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA=="
   "resolved" "https://registry.npmjs.org/clsx/-/clsx-1.1.1.tgz"
   "version" "1.1.1"
@@ -7141,7 +7155,7 @@
     "minimalistic-assert" "^1.0.0"
     "minimalistic-crypto-utils" "^1.0.1"
 
-"hoist-non-react-statics@^3.1.0", "hoist-non-react-statics@^3.3.1", "hoist-non-react-statics@^3.3.2":
+"hoist-non-react-statics@^3.1.0", "hoist-non-react-statics@^3.3.0", "hoist-non-react-statics@^3.3.1", "hoist-non-react-statics@^3.3.2":
   "integrity" "sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw=="
   "resolved" "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz"
   "version" "3.3.2"
@@ -8830,7 +8844,7 @@
   "resolved" "https://registry.npmjs.org/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz"
   "version" "4.3.0"
 
-"lodash.debounce@^4.0.8":
+"lodash.debounce@^4.0.6", "lodash.debounce@^4.0.8":
   "integrity" "sha1-gteb/zCmfEAF/9XiUVMArZyk168="
   "resolved" "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
   "version" "4.0.8"
@@ -8865,7 +8879,7 @@
   dependencies:
     "lodash._reinterpolate" "^3.0.0"
 
-"lodash.throttle@^4.1.1":
+"lodash.throttle@^4.0.1", "lodash.throttle@^4.1.1":
   "integrity" "sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ="
   "resolved" "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz"
   "version" "4.1.1"
@@ -9787,6 +9801,14 @@
     "prepend-http" "^1.0.0"
     "query-string" "^4.1.0"
     "sort-keys" "^1.0.0"
+
+"notistack@^2.0.3":
+  "integrity" "sha512-krmVFtTO9kEY1Pa4NrbyexrjiRcV6TqBM2xLx8nuDea1g96Z/OZfkvVLmYKkTvoSJ3jyQntWK16z86ssW5kt4A=="
+  "resolved" "https://registry.npmjs.org/notistack/-/notistack-2.0.3.tgz"
+  "version" "2.0.3"
+  dependencies:
+    "clsx" "^1.1.0"
+    "hoist-non-react-statics" "^3.3.0"
 
 "npm-run-path@^2.0.0":
   "integrity" "sha1-NakjLfo11wZ7TLLd8jV7GHFTbF8="
@@ -11519,7 +11541,7 @@
     "shell-quote" "^1.6.1"
     "ws" "^7"
 
-"react-dom@*", "react-dom@^16.8.0  || ^17.0.0", "react-dom@^17.0.2", "react-dom@>=16.6.0", "react-dom@>=16.8":
+"react-dom@*", "react-dom@^16.8.0  || ^17.0.0", "react-dom@^16.8.0 || ^17.0.0", "react-dom@^17.0.2", "react-dom@>=16.6.0", "react-dom@>=16.8":
   "integrity" "sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
   "version" "17.0.2"

@@ -16,29 +16,29 @@ import GlassDetailPage from './components/ExploreGlasses/GlassDetailPage/GlassDe
 function App() {
 	return (
 		<>
-			<Router>
-				<Switch>
-					<Redirect exact from='/' to='/home' />
-					<Route path='/home'>
-						<Home />
-					</Route>
-					<PrivateRoute path='/dashboard'>
-						<Dashboard />
-					</PrivateRoute>
-					<PrivateRoute path='/explore'>
-						<ExploreGlasses />
-					</PrivateRoute>
-					<PrivateRoute path='/eyeglass/:id'>
-						<GlassDetailPage />
-					</PrivateRoute>
-					<Route path='/login'>
-						<Login />
-					</Route>
-					<Route path='/register'>
-						<Register />
-					</Route>
-				</Switch>
-			</Router>
+				<Router>
+					<Switch>
+						<Redirect exact from='/' to='/home' />
+						<Route path='/home'>
+							<Home />
+						</Route>
+						<PrivateRoute path='/dashboard'>
+							<Dashboard />
+						</PrivateRoute>
+						<PrivateRoute path='/explore'>
+							<ExploreGlasses />
+						</PrivateRoute>
+						<PrivateRoute path='/eyeglass/:id'>
+							<GlassDetailPage />
+						</PrivateRoute>
+						<Route path='/login'>
+							<Login />
+						</Route>
+						<Route path='/register'>
+							<Register />
+						</Route>
+					</Switch>
+				</Router>
 		</>
 	);
 }
