@@ -4,6 +4,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
+import useAxios from '../../../hooks/useAxios';
 
 const style = {
 	position: 'absolute',
@@ -15,10 +16,42 @@ const style = {
 	p: 4,
 };
 
-const OrderModal = ({ isOrderOpen, setIsOrderOpen }) => {
+const OrderModal = (props) => {
+	const { isOrderOpen, setIsOrderOpen, selectedColor, quantity, product } =
+		props;
 	const { register, handleSubmit } = useForm();
-	const onSubmit = (data) => console.log(data);
 	const { user } = useAuth();
+	const { client } = useAxios();
+
+	// sending order data to server
+	const onSubmit = (data) => {
+		let order = {};
+
+		// setting the ordered user
+		order.user = { ...data };
+		order.user.user_img = user.photoURL;
+		order.user.user_uid = user.uid;
+
+		// setting order info
+		order.order_time = new Date().toLocaleString();
+		order.order_product_id = product._id;
+		order.order_product_title = product.product_title;
+		order.order_product_quantity = quantity;
+		order.order_status = 'pending';
+		order.order_total_price = parseFloat(product.product_price) * quantity;
+
+		client
+			.post('/placeorder', order)
+			.then((response) => {
+				console.log(response.data);
+				setIsOrderOpen(false);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+
+		console.log(order);
+	};
 
 	return (
 		<Modal
@@ -34,12 +67,9 @@ const OrderModal = ({ isOrderOpen, setIsOrderOpen }) => {
 				<div className='rounded-lg bg-white p-4 w-full' style={style}>
 					<div className='grid grid-cols-1 lg:grid-cols-2'>
 						<div className=''>
-							<img
-								src='https://demo1leotheme.b-cdn.net/leo_oobliss_demo/79-large_default/hummingbird-printed-t-shirt.jpg'
-								alt='product'
-							/>
+							<img src={product?.product_img} alt='product' />
 							<h4 className='text-lg text-center text-gray-500'>
-								Armani Exchange AX4029
+								{product?.product_title}
 							</h4>
 						</div>
 						<div className='bg-light p-4 rounded-lg'>
@@ -55,7 +85,7 @@ const OrderModal = ({ isOrderOpen, setIsOrderOpen }) => {
 									<input
 										className='modal-input'
 										defaultValue={user.displayName}
-										{...register('user_name')}
+										{...register('name')}
 									/>
 								</div>
 								{/* email */}
@@ -66,7 +96,7 @@ const OrderModal = ({ isOrderOpen, setIsOrderOpen }) => {
 									<input
 										className='modal-input'
 										defaultValue={user.email}
-										{...register('user_email')}
+										{...register('email')}
 									/>
 								</div>
 								{/* quantity */}
@@ -76,9 +106,9 @@ const OrderModal = ({ isOrderOpen, setIsOrderOpen }) => {
 									</h5>
 									<input
 										className='modal-input'
-										defaultValue={1}
+										defaultValue={quantity}
 										type='number'
-										{...register('product_quantity')}
+										disabled
 									/>
 								</div>
 								{/* color */}
@@ -86,17 +116,15 @@ const OrderModal = ({ isOrderOpen, setIsOrderOpen }) => {
 									<h5 className='uppercase text-gray-500 font-light'>
 										color
 									</h5>
-									<div className='flex space-x-2'>
-										<button className='ring-2 ring-primary rounded-full p-0.5'>
-											<span className='block p-3 rounded-full bg-black'></span>
-										</button>
-										<button>
-											<span className='block p-3 rounded-full bg-red-400'></span>
-										</button>
-										<button>
-											<span className='block p-3 rounded-full bg-yellow-500'></span>
-										</button>
-									</div>
+									{selectedColor ? (
+										<span
+											className={`block ring-2 ring-primary p-3 rounded-full ${selectedColor}`}
+										></span>
+									) : (
+										<span className='text-sm text-red-400'>
+											color not selected
+										</span>
+									)}
 								</div>
 
 								<input

@@ -8,13 +8,14 @@ import Pay from '../User/Pay/Pay';
 import DashboardHeader from '../DashboardHeader/DashboardHeader';
 import Review from '../User/Review/Review';
 import ManageAllOrders from '../Admin/ManageAllOrders/ManageAllOrders';
+import AddAProduct from '../Admin/AddAProduct/AddAProduct';
 
 const Dashboard = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 	const { path, url } = useRouteMatch();
 
 	return (
-		<div className='grid grid-cols-12 h-screen'>
+		<div className='grid grid-cols-12 md:h-screen'>
 			{/* mobile sidebar */}
 			<div
 				className={`absolute left-0 top-0 bg-white transform ${
@@ -58,6 +59,9 @@ const Dashboard = () => {
 						</AdminRoute>
 						<AdminRoute path={`${path}/manageorders`}>
 							<ManageAllOrders />
+						</AdminRoute>
+						<AdminRoute path={`${path}/addproduct`}>
+							<AddAProduct />
 						</AdminRoute>
 					</Switch>
 				</div>

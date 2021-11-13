@@ -1,23 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../../Shared/Footer/Footer';
 import Header from '../../Shared/Header/Header';
-import Rate from 'rc-rate';
-import 'rc-rate/assets/index.css';
 import { MdInsertComment, MdExpandLess, MdExpandMore } from 'react-icons/md';
 import {
 	TiSocialFacebook,
 	TiSocialTwitter,
 	TiSocialPinterest,
 } from 'react-icons/ti';
+import Rating from '@mui/material/Rating';
 import OrderModal from '../OrderModal/OrderModal';
+import { useParams } from 'react-router-dom';
+import useAxios from '../../../hooks/useAxios';
 
 const GlassDetailPage = () => {
-	const [currImg, setCurrImg] = useState(
-		'https://demo1leotheme.b-cdn.net/leo_oobliss_demo/79-large_default/hummingbird-printed-t-shirt.jpg'
-	);
-	const [selectedColor, setSelectedColor] = useState('');
+	const [currImg, setCurrImg] = useState('');
+	const [selectedColor, setSelectedColor] = useState(null);
 	const [quantity, setQuantity] = useState(1);
-	let [isOrderOpen, setIsOrderOpen] = useState(false);
+	const [isOrderOpen, setIsOrderOpen] = useState(false);
+	const { id } = useParams();
+	const [product, setProduct] = useState(null);
+	const { client } = useAxios();
+
+	// fetching product info
+	useEffect(() => {
+		client.get(`/product/${id}`).then((response) => {
+			setProduct(response.data);
+		});
+	}, []);
 
 	const handleQuantityChange = (operation) => {
 		if (operation === 'add' && quantity + 1 <= 10) {
@@ -27,13 +36,6 @@ const GlassDetailPage = () => {
 		}
 	};
 
-	const imgLinks = [
-		'https://demo1leotheme.b-cdn.net/leo_oobliss_demo/79-large_default/hummingbird-printed-t-shirt.jpg',
-		'https://demo1leotheme.b-cdn.net/leo_oobliss_demo/86-large_default/the-best-is-yet-to-come-framed-poster.jpg',
-		'https://demo1leotheme.b-cdn.net/leo_oobliss_demo/79-large_default/hummingbird-printed-t-shirt.jpg',
-		'https://demo1leotheme.b-cdn.net/leo_oobliss_demo/79-large_default/hummingbird-printed-t-shirt.jpg',
-	];
-
 	return (
 		<>
 			<Header />
@@ -41,10 +43,13 @@ const GlassDetailPage = () => {
 				{/* left column */}
 				<div className=''>
 					<div>
-						<img src={currImg} alt='glassImg' />
+						<img
+							src={currImg ? currImg : product?.product_img}
+							alt='glassImg'
+						/>
 					</div>
 					<div className='grid grid-cols-4 gap-2'>
-						{imgLinks.map((img, index) => (
+						{product?.product_more_img.map((img, index) => (
 							<button
 								onClick={() => setCurrImg(img)}
 								key={index}
@@ -58,12 +63,14 @@ const GlassDetailPage = () => {
 				{/* right column */}
 				<div className='space-y-4 text-sm'>
 					{/* title */}
-					<h5 className='text-3xl'>Armani Exchange AX4029</h5>
+					<h5 className='text-3xl'>
+						{product && product.product_title}
+					</h5>
 					{/* rating */}
 					<div className='flex items-center space-x-2'>
 						<span>Rating</span>
 						<span>
-							<Rate value={4} disabled />
+							<Rating value={0} readOnly />
 						</span>
 					</div>
 					{/* reviews */}
@@ -85,22 +92,30 @@ const GlassDetailPage = () => {
 						</button>
 					</div>
 					{/* price */}
-					<h5 className='text-primary text-xl'>$23.90</h5>
+					<h5 className='text-primary text-xl'>
+						${product && product.product_price}
+					</h5>
 					{/* desc */}
-					<p>Printed on rigid matt paper and smooth surface.</p>
+					<p>{product && product.product_desc}</p>
 					{/* colors */}
 					<div className='flex space-x-4 items-center'>
 						<h5 className='text-lg'>COLOR</h5>
 						<div className='flex space-x-2'>
-							<button className='ring-2 ring-primary rounded-full p-0.5'>
-								<span className='block p-3 rounded-full bg-black'></span>
-							</button>
-							<button>
-								<span className='block p-3 rounded-full bg-red-400'></span>
-							</button>
-							<button>
-								<span className='block p-3 rounded-full bg-yellow-500'></span>
-							</button>
+							{product &&
+								product.product_colors.map((color, index) => (
+									<button
+										key={index}
+										onClick={() => setSelectedColor(color)}
+										className={`${
+											selectedColor === color &&
+											'ring-2 ring-primary'
+										} rounded-full p-0.5`}
+									>
+										<span
+											className={`block p-3 rounded-full ${color}`}
+										></span>
+									</button>
+								))}
 						</div>
 					</div>
 					{/* quantity */}
@@ -140,6 +155,9 @@ const GlassDetailPage = () => {
 			<OrderModal
 				isOrderOpen={isOrderOpen}
 				setIsOrderOpen={setIsOrderOpen}
+				selectedColor={selectedColor}
+				quantity={quantity}
+				product={product}
 			/>
 			<Footer />
 		</>

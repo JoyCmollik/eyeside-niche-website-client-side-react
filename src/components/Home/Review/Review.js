@@ -1,6 +1,5 @@
 import React from 'react';
-import Rate from 'rc-rate';
-import 'rc-rate/assets/index.css';
+import Rating from '@mui/material/Rating';
 import { FaQuoteLeft } from 'react-icons/fa';
 
 const Review = () => {
@@ -13,7 +12,7 @@ const Review = () => {
 			/>
 			<div className='flex justify-between items-center'>
 				<h5 className='text-lg'>Frank Klin</h5>
-				<Rate value={4} disabled />
+				<Rating value={0} readOnly />
 			</div>
 
 			<p className='text-sm text-gray-500'>

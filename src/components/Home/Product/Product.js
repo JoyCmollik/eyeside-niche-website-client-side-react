@@ -7,28 +7,34 @@ import {
 	FiArrowRight,
 } from 'react-icons/fi';
 
-const Product = () => {
+const Product = ({ product }) => {
+	const {
+		_id,
+		product_title,
+		product_img,
+		product_colors,
+		product_category,
+		product_price,
+	} = product;
+
 	const productLinks = [
 		{ to: '/', icon: <FiSearch /> },
 		{ to: '/', icon: <FiShoppingCart /> },
 		{ to: '/', icon: <FiHeart /> },
-		{ to: '/', icon: <FiArrowRight /> },
+		{ to: `/eyeglass/${_id}`, icon: <FiArrowRight /> },
 	];
 
 	return (
 		<div className='space-y-3 text-center'>
-			<img
-				src='https://demo1leotheme.b-cdn.net/leo_oobliss_demo/80-home_default/hummingbird-printed-t-shirt.jpg'
-				alt='eyeglasses'
-			/>
-			<p className='text-gray-500'>Men</p>
-			<h4 className='font-light'>Burberry Eyeglasses</h4>
+			<img src={product_img} alt='eyeglasses' />
+			<p className='text-gray-500 text-sm'>{product_category}</p>
+			<h4 className='font-light'>{product_title}</h4>
 			<div className='flex space-x-2 justify-center'>
-				<span className='p-2 rounded-full bg-black'></span>
-				<span className='p-2 rounded-full bg-red-400'></span>
-				<span className='p-2 rounded-full bg-yellow-500'></span>
+				{product_colors.map((color, index) => (
+					<span key={index} className={`p-2 rounded-full ${color}`} />
+				))}
 			</div>
-			<h5 className='text-brand text-lg'>$23.90</h5>
+			<h5 className='text-brand text-lg'>${product_price}</h5>
 			<div className='flex justify-center space-x-2'>
 				{productLinks.map(({ to, icon }, index) => (
 					<Link key={index} to={to}>

@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Product from '../../Home/Product/Product';
 import Footer from '../../Shared/Footer/Footer';
 import Header from '../../Shared/Header/Header';
+import useAxios from '../../../hooks/useAxios';
+
+const categories = [
+	'All Glasses',
+	"Women's Eyeglasses",
+	"Men's Eyeglasses",
+	'Ray Ban Eyeglasses',
+	"Multifocal's",
+	'Designer Eyeglasses',
+];
 
 const ExploreGlasses = () => {
+	const [products, setProducts] = useState(null);
 	const [category, setCategory] = useState('All Glasses');
-	const categories = [
-		'All Glasses',
-		"Women's Eyeglasses",
-		"Men's Eyeglasses",
-		'Ray Ban Eyeglasses',
-		"Multifocal's",
-		'Designer Eyeglasses',
-	];
+	const { client } = useAxios();
+
+	useEffect(() => {
+		client.get('/products').then((response) => {
+			setProducts(response.data);
+		});
+	}, []);
 
 	return (
 		<>
@@ -41,10 +51,10 @@ const ExploreGlasses = () => {
 						</div>
 					</div>
 					<div className='col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center'>
-						<Product />
-						<Product />
-						<Product />
-						<Product />
+						{products &&
+							products.map((product) => (
+								<Product key={product._id} product={product} />
+							))}
 					</div>
 				</div>
 			</div>

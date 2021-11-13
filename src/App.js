@@ -22,14 +22,14 @@ function App() {
 					<Route path='/home'>
 						<Home />
 					</Route>
+					<PrivateRoute path='/dashboard'>
+						<Dashboard />
+					</PrivateRoute>
 					<PrivateRoute path='/explore'>
 						<ExploreGlasses />
 					</PrivateRoute>
-					<PrivateRoute path='/eyeglass'>
+					<PrivateRoute path='/eyeglass/:id'>
 						<GlassDetailPage />
-					</PrivateRoute>
-					<PrivateRoute path='/dashboard'>
-						<Dashboard />
 					</PrivateRoute>
 					<Route path='/login'>
 						<Login />
