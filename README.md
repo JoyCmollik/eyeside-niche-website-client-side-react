@@ -1,6 +1,6 @@
 # Project: Eyeside (eyewear online platform)
 
-Find this project live: [EyeSide Project](https://github.com/facebook/create-react-app).
+Find this project live: [EyeSide Project](eyeside-3712b.web.app/home).
 
 ## About this project
 
