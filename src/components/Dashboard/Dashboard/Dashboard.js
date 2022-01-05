@@ -10,6 +10,7 @@ import ManageAllOrders from '../Admin/ManageAllOrders/ManageAllOrders';
 import AddAProduct from '../Admin/AddAProduct/AddAProduct';
 import useAuth from '../../../hooks/useAuth';
 import GiveReview from '../User/GiveReview/GiverReview';
+import Cart from '../User/Cart/Cart';
 
 const Dashboard = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -42,6 +43,9 @@ const Dashboard = () => {
 						<>
 							<Route exact path={`${path}`}>
 								<Pay />
+							</Route>
+							<Route path={`${path}/cart`}>
+								<Cart />
 							</Route>
 							<Route path={`${path}/myorders`}>
 								<MyOrders />

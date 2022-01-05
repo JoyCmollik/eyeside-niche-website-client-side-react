@@ -7,6 +7,7 @@ import {
 	MdAdminPanelSettings,
 	MdLibraryAdd,
 	MdLogout,
+	MdOutlineShoppingCart,
 } from 'react-icons/md';
 import { FaUsersCog, FaHome } from 'react-icons/fa';
 
@@ -14,6 +15,11 @@ const DashboardSidebar = ({ setIsDrawerOpen, url }) => {
 	const { isAdmin, handleSignOut } = useAuth();
 	const userLinks = [
 		{ icon: <FaHome />, to: '/home', text: 'Home' },
+		{
+			icon: <MdOutlineShoppingCart />,
+			to: `${url}/cart`,
+			text: 'Cart',
+		},
 		{ icon: <BsFillCreditCard2FrontFill />, to: `${url}`, text: 'Pay' },
 		{ icon: <BsBagCheckFill />, to: `${url}/myorders`, text: 'My Orders' },
 		{ icon: <MdRateReview />, to: `${url}/review`, text: 'Review' },

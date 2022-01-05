@@ -54,26 +54,28 @@ const Header = () => {
 					</NavLink>
 				)}
 
-				{user?.displayName && (
-					<p className='font-lora bg-blue-50 rounded px-2 py-1'>
-						{user.displayName.split(' ', 3).join(' ')}
-					</p>
-				)}
-				{user ? (
-					<button
-						className='bg-brand rounded-3xl px-4 py-1 text-white'
-						onClick={handleSignOut}
-					>
-						Signout
-					</button>
-				) : (
-					<NavLink
-						className='bg-primary rounded-lg px-4 py-1 text-white'
-						to='login'
-					>
-						LOGIN/REGISTER
-					</NavLink>
-				)}
+				<div className='flex items-center border rounded-3xl shadow'>
+					{user?.displayName && (
+						<p className='font-lora px-2 py-1'>
+							{user.displayName.split(' ', 3).join(' ')}
+						</p>
+					)}
+					{user ? (
+						<button
+							className='bg-brand rounded-3xl px-4 py-1 text-white'
+							onClick={handleSignOut}
+						>
+							Signout
+						</button>
+					) : (
+						<NavLink
+							className='bg-primary rounded-lg px-4 py-1 text-white'
+							to='login'
+						>
+							LOGIN/REGISTER
+						</NavLink>
+					)}
+				</div>
 			</div>
 		</header>
 	);
