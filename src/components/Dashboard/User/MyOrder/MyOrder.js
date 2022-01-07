@@ -4,7 +4,6 @@ const MyOrder = ({ myOrder, handleCancelOrder }) => {
 	const {
 		_id,
 		order_time,
-		order_product_id,
 		order_product_quantity,
 		order_status,
 		order_product_title,

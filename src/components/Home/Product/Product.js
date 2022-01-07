@@ -6,6 +6,8 @@ import {
 	FiHeart,
 	FiArrowRight,
 } from 'react-icons/fi';
+import { BsCartCheck } from 'react-icons/bs';
+import useCart from '../../../hooks/useCart';
 
 const Product = ({ product }) => {
 	const {
@@ -16,13 +18,7 @@ const Product = ({ product }) => {
 		product_category,
 		product_price,
 	} = product;
-
-	const productLinks = [
-		{ to: `/eyeglass/${_id}`, icon: <FiSearch /> },
-		{ to: `/eyeglass/${_id}`, icon: <FiShoppingCart /> },
-		{ to: `/eyeglass/${_id}`, icon: <FiHeart /> },
-		{ to: `/eyeglass/${_id}`, icon: <FiArrowRight /> },
-	];
+	const { itemCart, addItemToCart } = useCart();
 
 	return (
 		<div className='space-y-3 text-center'>
@@ -36,13 +32,28 @@ const Product = ({ product }) => {
 			</div>
 			<h5 className='text-brand text-lg'>${product_price}</h5>
 			<div className='flex justify-center space-x-2'>
-				{productLinks.map(({ to, icon }, index) => (
-					<Link key={index} to={to}>
-						<button className='p-3 rounded-full border border-primary text-primary text-xl hover:bg-primary hover:text-white transition duration-300'>
-							{icon}
-						</button>
-					</Link>
-				))}
+				<button className='btn-rounded'>
+					<FiSearch />
+				</button>
+				<button
+					onClick={() => addItemToCart(_id)}
+					className='btn-rounded'
+					disabled={itemCart.hasOwnProperty(_id)}
+				>
+					{!itemCart.hasOwnProperty(_id) ? (
+						<FiShoppingCart />
+					) : (
+						<BsCartCheck />
+					)}
+				</button>
+				<button className='btn-rounded'>
+					<FiHeart />
+				</button>
+				<Link to={`/eyeglass/${_id}`}>
+					<button className='btn-rounded'>
+						<FiArrowRight />
+					</button>
+				</Link>
 			</div>
 		</div>
 	);

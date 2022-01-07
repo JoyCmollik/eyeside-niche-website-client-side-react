@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import Footer from '../../Shared/Footer/Footer';
 import Header from '../../Shared/Header/Header';
-import { MdInsertComment, MdExpandLess, MdExpandMore } from 'react-icons/md';
+import {
+	MdInsertComment,
+	MdExpandLess,
+	MdExpandMore,
+	MdOutlineAddShoppingCart,
+} from 'react-icons/md';
 import {
 	TiSocialFacebook,
 	TiSocialTwitter,
 	TiSocialPinterest,
 } from 'react-icons/ti';
+import { BsCartCheck } from 'react-icons/bs';
 import Rating from '@mui/material/Rating';
-import OrderModal from '../OrderModal/OrderModal';
 import { useParams } from 'react-router-dom';
 import useAxios from '../../../hooks/useAxios';
+import useCart from '../../../hooks/useCart';
 
 const GlassDetailPage = () => {
 	const [currImg, setCurrImg] = useState('');
-	const [selectedColor, setSelectedColor] = useState(null);
 	const [quantity, setQuantity] = useState(1);
-	const [isOrderOpen, setIsOrderOpen] = useState(false);
 	const { id } = useParams();
 	const [product, setProduct] = useState(null);
 	const { client } = useAxios();
+	const { itemCart, updateQuantityInCart } = useCart();
 
 	// fetching product info
 	useEffect(() => {
@@ -103,18 +108,14 @@ const GlassDetailPage = () => {
 						<div className='flex space-x-2'>
 							{product &&
 								product.product_colors.map((color, index) => (
-									<button
+									<div
 										key={index}
-										onClick={() => setSelectedColor(color)}
-										className={`${
-											selectedColor === color &&
-											'ring-2 ring-primary'
-										} rounded-full p-0.5`}
+										className={`rounded-full p-0.5`}
 									>
 										<span
 											className={`block p-3 rounded-full ${color}`}
 										></span>
-									</button>
+									</div>
 								))}
 						</div>
 					</div>
@@ -145,20 +146,35 @@ const GlassDetailPage = () => {
 					</div>
 					{/* purchase button */}
 					<button
-						onClick={() => setIsOrderOpen(true)}
-						className='btn bg-primary'
+						onClick={() => updateQuantityInCart(id, quantity)}
+						className={`btn flex items-center ${
+							itemCart.hasOwnProperty(id)
+								? 'bg-gray-400'
+								: 'bg-primary'
+						}`}
+						disabled={itemCart.hasOwnProperty(id)}
 					>
-						PURCHASE
+						{itemCart.hasOwnProperty(id) ? (
+							<>
+								<span className='mr-1'>added to cart</span>
+								<BsCartCheck className='text-lg' />
+							</>
+						) : (
+							<>
+								<MdOutlineAddShoppingCart className='text-lg' />
+								<span className='ml-1'>add to cart</span>
+							</>
+						)}
 					</button>
 				</div>
 			</div>
-			<OrderModal
+			{/* <OrderModal
 				isOrderOpen={isOrderOpen}
 				setIsOrderOpen={setIsOrderOpen}
 				selectedColor={selectedColor}
 				quantity={quantity}
 				product={product}
-			/>
+			/> */}
 			<Footer />
 		</>
 	);

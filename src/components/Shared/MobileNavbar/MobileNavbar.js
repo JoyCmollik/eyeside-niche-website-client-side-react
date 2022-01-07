@@ -25,8 +25,7 @@ const MobileNavbar = ({ isDrawerOpen, setIsDrawerOpen }) => {
 
 	return (
 		<div
-			className='h-screen shadow-inner w-28 md:w-full flex flex-col justify-between items-center px-4 space-y-4 bg-light md:bg-white'
-			style={{ zIndex: '9999' }}
+			className={`h-screen shadow-inner w-28 md:w-full flex flex-col justify-between items-center px-4 space-y-4 bg-light md:bg-white`}
 		>
 			<div className=''>
 				<div className='py-4 mb-10'>
