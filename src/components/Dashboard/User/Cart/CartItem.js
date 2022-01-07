@@ -3,7 +3,7 @@ import { MdDelete } from 'react-icons/md';
 import { HiPlus, HiMinus } from 'react-icons/hi';
 import useCart from '../../../../hooks/useCart';
 
-const CartItem = ({ product }) => {
+const CartItem = ({ product, handleProductQuantity }) => {
 	const {
 		product_title,
 		product_price,
@@ -12,7 +12,22 @@ const CartItem = ({ product }) => {
 		product_img,
 	} = product;
 	const [selectedColor, setSelectedColor] = useState(product_colors[0]);
+	const [quantity, setQuantity] = useState(product_quantity);
 	const { removeItemFromCart } = useCart();
+
+	const handleQuantityOperation = (operation, quantity = 1) => {
+		let newQuantity;
+		if (operation === 'inc') {
+			newQuantity = product_quantity + 1;
+		} else if (operation === 'dec' && product_quantity - 1) {
+			newQuantity = product_quantity - 1;
+		} else {
+			newQuantity = Number(quantity);
+		}
+
+		handleProductQuantity(product._id, newQuantity);
+		setQuantity(() => newQuantity);
+	};
 
 	return (
 		<article className='flex items-start justify-around px-8 space-x-8'>
@@ -51,20 +66,29 @@ const CartItem = ({ product }) => {
 				<div className='flex-grow flex items-start justify-between lg:justify-around'>
 					{/* quantity */}
 					<div className='p-2 shadow flex justify-between items-center space-x-4 border'>
-						<button>
+						<button
+							onClick={() => handleQuantityOperation('dec')}
+							className=''
+						>
 							<HiMinus />
 						</button>
 						<input
+							onChange={(e) => setQuantity(e.target.value)}
+							onBlur={() =>
+								handleQuantityOperation('set', quantity)
+							}
 							className='bg-transparent outline-none w-4'
 							type='text'
-							defaultValue={product_quantity}
+							value={quantity}
 						/>
-						<button>
+						<button onClick={() => handleQuantityOperation('inc')}>
 							<HiPlus />
 						</button>
 					</div>
 					{/* final price of single item */}
-					<h2 className='text-xl font-medium'>$23.90</h2>
+					<h5 className='text-lg font-medium'>
+						${(product_price * quantity).toPrecision(4)}
+					</h5>
 					{/* delete button */}
 					<button
 						onClick={() => removeItemFromCart(product._id)}
