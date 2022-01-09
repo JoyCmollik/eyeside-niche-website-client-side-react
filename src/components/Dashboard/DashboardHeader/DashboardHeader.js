@@ -8,7 +8,7 @@ const DashboardHeader = ({ isDrawerOpen, setIsDrawerOpen }) => {
 	const { user } = useAuth();
 
 	return (
-		<div className='py-4 mb-10 flex justify-between items-center bg-light md:bg-white'>
+		<div className='py-4 mb-10 flex justify-between items-center bg-light md:bg-white md:sticky top-0'>
 			{/* hamburger */}
 			<button
 				className='text-primary text-2xl p-1 border border-primary rounded md:hidden'

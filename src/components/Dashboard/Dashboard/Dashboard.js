@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router';
+import { Route, Switch, useRouteMatch, Redirect } from 'react-router';
 import AdminRoute from '../../Shared/AdminRoute/AdminRoute';
 import MakeAdmin from '../Admin/MakeAdmin/MakeAdmin';
 import DashboardSidebar from '../DashboardSidebar/DashboardSidebar';
@@ -33,7 +33,7 @@ const Dashboard = () => {
 			>
 				<DashboardSidebar setIsDrawerOpen={setIsDrawerOpen} url={url} />
 			</div>
-			<div className='col-span-12 md:col-span-9 xl:col-span-10 px-4 space-y-4 overflow-x-auto'>
+			<div className='col-span-12 md:col-span-9 xl:col-span-10 px-4 space-y-4 overflow-y-auto'>
 				<DashboardHeader
 					isDrawerOpen={isDrawerOpen}
 					setIsDrawerOpen={setIsDrawerOpen}
@@ -41,11 +41,16 @@ const Dashboard = () => {
 				<Switch>
 					{!isAdmin && (
 						<>
-							<Route exact path={`${path}`}>
-								<Pay />
-							</Route>
+							<Redirect
+								exact
+								from={`${path}`}
+								to={`${path}/cart`}
+							/>
 							<Route path={`${path}/cart`}>
 								<Cart />
+							</Route>
+							<Route exact path={`${path}/pay/:_id`}>
+								<Pay />
 							</Route>
 							<Route path={`${path}/myorders`}>
 								<MyOrders />

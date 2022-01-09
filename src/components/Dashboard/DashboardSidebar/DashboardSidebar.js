@@ -13,6 +13,7 @@ import { FaUsersCog, FaHome } from 'react-icons/fa';
 
 const DashboardSidebar = ({ setIsDrawerOpen, url }) => {
 	const { isAdmin, handleSignOut } = useAuth();
+
 	const userLinks = [
 		{ icon: <FaHome />, to: '/home', text: 'Home' },
 		{
@@ -20,10 +21,11 @@ const DashboardSidebar = ({ setIsDrawerOpen, url }) => {
 			to: `${url}/cart`,
 			text: 'Cart',
 		},
-		{ icon: <BsFillCreditCard2FrontFill />, to: `${url}`, text: 'Pay' },
+		// { icon: <BsFillCreditCard2FrontFill />, to: `${url}/pay`, text: 'Pay' },
 		{ icon: <BsBagCheckFill />, to: `${url}/myorders`, text: 'My Orders' },
 		{ icon: <MdRateReview />, to: `${url}/review`, text: 'Review' },
 	];
+
 	const adminLinks = [
 		{ icon: <FaHome />, to: '/home', text: 'Home' },
 		{

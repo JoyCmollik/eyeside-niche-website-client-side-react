@@ -63,10 +63,12 @@ const Header = () => {
 				{/* cart */}
 				<Link to='/dashboard/cart'>
 					<button className='relative'>
-						<p className='text-xs text-white bg-primary rounded-full p-0.5 absolute -top-3 -right-2'>
-							{Object.keys(itemCart).length}
+						<p className='text-xs text-white bg-primary rounded-full p-2 absolute -top-2 -right-2'>
+							<span className='absolute top-2/4 left-2/4 transform -translate-x-2/4 -translate-y-2/4'>
+								{Object.keys(itemCart).length}
+							</span>
 						</p>
-						<HiOutlineShoppingCart className='text-xl' />
+						<HiOutlineShoppingCart className='text-2xl' />
 					</button>
 				</Link>
 

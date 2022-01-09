@@ -4,7 +4,8 @@ import { HiChevronLeft } from 'react-icons/hi';
 import CartCosting from './CartCosting';
 import useCart from '../../../../hooks/useCart';
 import useAxios from '../../../../hooks/useAxios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import useAuth from '../../../../hooks/useAuth';
 
 const initialCartCosting = {
 	items: 0,
@@ -19,7 +20,9 @@ const Cart = () => {
 	const [cartProducts, setCartProducts] = useState([]);
 	const [cartCosting, setCartCosting] = useState(initialCartCosting);
 	const { client } = useAxios();
+	const { user } = useAuth();
 	const { itemCart } = useCart();
+	const history = useHistory();
 
 	useEffect(() => {
 		if (itemCart) {
@@ -43,6 +46,7 @@ const Cart = () => {
 		}
 	}, [itemCart]);
 
+	// updating product quantity and changing costings
 	const handleProductQuantity = (id, quantity) => {
 		const newCartProducts = cartProducts.map((product) => {
 			if (product._id === id) {
@@ -51,7 +55,6 @@ const Cart = () => {
 			return product;
 		});
 
-		console.log(id, quantity, newCartProducts);
 		handleCartCosting(newCartProducts);
 		setCartProducts(() => newCartProducts);
 	};
@@ -63,7 +66,10 @@ const Cart = () => {
 			0
 		);
 
-		newCartCosting.items = newCartProducts.length;
+		newCartCosting.items = newCartProducts.reduce(
+			(prev, curr) => curr.product_quantity + prev,
+			0
+		);
 		newCartCosting.itemsCost = itemsTotal.toPrecision(4);
 		newCartCosting.shipping = (itemsTotal * 0.025).toPrecision(4);
 		newCartCosting.taxes = (itemsTotal * 0.1).toPrecision(4);
@@ -77,10 +83,42 @@ const Cart = () => {
 		setCartCosting(() => newCartCosting);
 	};
 
+	const handlePlaceOrder = () => {
+		const orderedItems = cartProducts.map((item) => {
+			let currItem = {
+				item_id: item._id,
+				item_quantity: item.product_quantity,
+			};
+			return currItem;
+		});
+
+		const order = {
+			orderedItems,
+			user_uid: user.uid,
+			user_avatar: user.photoURL,
+			user_name: user.displayName,
+			order_costing: cartCosting,
+			order_createdAt: new Date(),
+			status: 'pending',
+			payment_status: 'unpaid',
+		};
+
+		client
+			.post('order', order)
+			.then((response) => {
+				const insertedId = response.data.insertedId;
+				console.log(response);
+				history.replace(`/dashboard/pay/${insertedId}`);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
 	return (
 		<div className='space-y-4 lg:space-y-0 lg:grid grid-cols-12 gap-4'>
 			{/* shopping items */}
-			<div className='col-span-8 space-y-4'>
+			<div className='col-span-8 space-y-4 mb-4'>
 				<div className='border rounded space-y-4'>
 					<h4 className='text-xl font-medium uppercase px-4 py-2 border-b'>
 						shopping cart
@@ -98,15 +136,20 @@ const Cart = () => {
 							))}
 					</div>
 				</div>
-				<Link to='/explore'>
-					<button className='btn bg-black text-sm text-white space-x-1 flex items-center'>
-						<HiChevronLeft className='text-xl' />{' '}
-						<span>continue shopping</span>
-					</button>
-				</Link>
+				<div>
+					<Link to='/explore'>
+						<button className='btn bg-black text-sm text-white space-x-1 flex items-center'>
+							<HiChevronLeft className='text-xl' />{' '}
+							<span>continue shopping</span>
+						</button>
+					</Link>
+				</div>
 			</div>
 			<div className='col-span-4 space-y-4'>
-				<CartCosting cartCosting={cartCosting} />
+				<CartCosting
+					cartCosting={cartCosting}
+					handlePlaceOrder={handlePlaceOrder}
+				/>
 			</div>
 		</div>
 	);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CartCosting = ({ cartCosting }) => {
+const CartCosting = ({ cartCosting, handlePlaceOrder }) => {
 	const { items, itemsCost, shipping, taxes, totalExcTax, totalIncTax } =
 		cartCosting;
 
@@ -28,7 +28,10 @@ const CartCosting = ({ cartCosting }) => {
 				<p>${taxes}</p>
 			</li>
 			<li className='pt-4 flex justify-center items-center'>
-				<button className='btn bg-black text-sm text-white'>
+				<button
+					onClick={handlePlaceOrder}
+					className='btn bg-black text-sm text-white'
+				>
 					proceed to checkout
 				</button>
 			</li>
