@@ -31,6 +31,7 @@ const CartCosting = ({ cartCosting, handlePlaceOrder }) => {
 				<button
 					onClick={handlePlaceOrder}
 					className='btn bg-black text-sm text-white'
+					disabled={!Boolean(items)}
 				>
 					proceed to checkout
 				</button>

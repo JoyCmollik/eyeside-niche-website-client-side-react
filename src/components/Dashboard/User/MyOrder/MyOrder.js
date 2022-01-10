@@ -8,10 +8,11 @@ const MyOrder = ({ myOrder, handleCancelOrder }) => {
 		order_status,
 		order_product_title,
 		order_total_price,
+		payment,
 	} = myOrder;
 
 	return (
-		<div className='w-full border rounded-lg bg-light p-2 space-y-2'>
+		<div className='w-full border rounded-lg p-2 space-y-2'>
 			{/* heading */}
 			<div className='lg:flex space-y-2 lg:space-y-0 justify-between'>
 				{/* left heading */}
@@ -39,7 +40,7 @@ const MyOrder = ({ myOrder, handleCancelOrder }) => {
 				</div>
 			</div>
 			{/* order item */}
-			<div className='pb-2 lg:pb-0 space-y-2 lg:space-y-0 lg:flex justify-between items-center bg-white rounded-lg shadow text-gray-500 px-2'>
+			<div className='pb-2 lg:pb-0 space-y-2 lg:space-y-0 lg:flex justify-between items-center bg-white rounded-lg shadow text-gray-500 px-2 border'>
 				{/* detail */}
 				<div className='pb:2 lg:pb-0 space-y-2 lg:space-y-0 lg:flex items-center space-x-4'>
 					<img
@@ -52,9 +53,17 @@ const MyOrder = ({ myOrder, handleCancelOrder }) => {
 				</div>
 				{/* actions */}
 				<div className='flex items-center space-x-4'>
-					<p className='bg-purple-100 text-purple-500 rounded-lg px-4 py-2'>
-						{order_status}
-					</p>
+					<div>
+						{payment ? (
+							<p className='bg-green-100 text-green-500 rounded-lg px-4 py-2'>
+								paid
+							</p>
+						) : (
+							<p className='bg-purple-100 text-purple-500 rounded-lg px-4 py-2'>
+								payment pending
+							</p>
+						)}
+					</div>
 					<button
 						onClick={() => handleCancelOrder(_id)}
 						className='bg-red-100 text-red-500 rounded-lg px-4 py-2'

@@ -21,7 +21,7 @@ const Cart = () => {
 	const [cartCosting, setCartCosting] = useState(initialCartCosting);
 	const { client } = useAxios();
 	const { user } = useAuth();
-	const { itemCart } = useCart();
+	const { itemCart, resetCart } = useCart();
 	const history = useHistory();
 
 	useEffect(() => {
@@ -100,14 +100,15 @@ const Cart = () => {
 			order_costing: cartCosting,
 			order_createdAt: new Date(),
 			status: 'pending',
-			payment_status: 'unpaid',
 		};
 
 		client
 			.post('order', order)
 			.then((response) => {
+				resetCart();
+				setCartProducts([]);
+
 				const insertedId = response.data.insertedId;
-				console.log(response);
 				history.replace(`/dashboard/pay/${insertedId}`);
 			})
 			.catch((error) => {

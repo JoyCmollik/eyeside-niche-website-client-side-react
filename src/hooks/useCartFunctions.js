@@ -9,32 +9,39 @@ import {
 
 const useCart = () => {
 	const [itemCart, setItemCart] = useState({});
-	const [isCartUpdated, setIsCartUpdated] = useState(false);
+	const [isCartUpdated, setIsCartUpdated] = useState(true);
 
 	useEffect(() => {
-		const currCart = getCart();
-		console.log(currCart);
-		if (currCart) {
-			setItemCart(currCart);
-		}
+		if(isCartUpdated) {
+			const currCart = getCart();
+			console.log(currCart);
+			if (currCart) {
+				setItemCart(currCart);
+			}
 
-		setIsCartUpdated(true);
+			setIsCartUpdated(false);
+		}
 	}, [isCartUpdated]);
 
 	const addItemToCart = (itemId) => {
 		console.log(itemId);
 		addToCart(itemId);
-		setIsCartUpdated(false);
+		setIsCartUpdated(true);
 	};
 
 	const removeItemFromCart = (itemId) => {
 		removeFromCart(itemId);
-		setIsCartUpdated(false);
+		setIsCartUpdated(true);
 	};
 
 	const updateQuantityInCart = (itemId, quantity) => {
 		cartItemQuantity(itemId, quantity);
-		setIsCartUpdated(false);
+		setIsCartUpdated(true);
+	};
+
+	const resetCart = () => {
+		setCart({});
+		setIsCartUpdated(true);
 	};
 
 	return {
@@ -42,6 +49,7 @@ const useCart = () => {
 		addItemToCart,
 		removeItemFromCart,
 		updateQuantityInCart,
+		resetCart,
 	};
 };
 
