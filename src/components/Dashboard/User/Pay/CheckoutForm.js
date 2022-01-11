@@ -3,6 +3,7 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useHistory } from 'react-router-dom';
 import useAxios from '../../../../hooks/useAxios';
 import useAuth from '../../../../hooks/useAuth';
+import { Alert } from '@mui/material';
 
 const CheckoutForm = ({ order }) => {
 	const stripe = useStripe();
@@ -18,7 +19,6 @@ const CheckoutForm = ({ order }) => {
 	const [successMessage, setSuccessMessage] = useState('');
 
 	useEffect(() => {
-		console.log('rendered');
 		const data = { price: order_costing.totalIncTax };
 		client
 			.post('create-payment-intent', data)
@@ -100,7 +100,7 @@ const CheckoutForm = ({ order }) => {
 
 	return (
 		<div>
-			<form onSubmit={handleSubmit}>
+			<form className='space-y-4' onSubmit={handleSubmit}>
 				<CardElement
 					options={{
 						style: {
@@ -117,16 +117,22 @@ const CheckoutForm = ({ order }) => {
 						},
 					}}
 				/>
-				{processing ? (
-					<p>Confirming...</p>
-				) : (
-					<button
-						className='bg-primary rounded-lg px-4 py-1 text-white'
-						type='submit'
-						disabled={!stripe}
-					>
-						Pay ${order.order_costing.totalIncTax}
-					</button>
+
+				<button
+					className='bg-primary rounded-lg px-4 py-1 text-white'
+					type='submit'
+					disabled={!stripe || processing}
+				>
+					{processing ? (
+						<span>Confirming...</span>
+					) : (
+						<span>Pay ${order.order_costing.totalIncTax}</span>
+					)}
+				</button>
+				{error && (
+					<Alert sx={{ mt: 4 }} severity='error'>
+						{error}
+					</Alert>
 				)}
 			</form>
 		</div>

@@ -4,7 +4,7 @@ import Order from '../Order/Order';
 const headingList = [
 	'Order ID',
 	'User',
-	'Product',
+	'Payment',
 	'Price',
 	'Status',
 	'Actions',

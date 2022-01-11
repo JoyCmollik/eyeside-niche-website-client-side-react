@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useLocation, useHistory, Link } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
-import CircularProgress from '@mui/material/CircularProgress';
 import loginImage from '../../../images/mobile-login-animate.svg';
 import google from '../../../images/google.png';
+import { Alert } from '@mui/material';
 
 const Login = () => {
 	const [userInput, setUserInput] = useState({
@@ -82,15 +82,9 @@ const Login = () => {
 							className='w-full flex justify-center items-center rounded-3xl py-2 border text-black px-4 bg-primary uppercase text-white checked:bg-brand'
 							type='submit'
 						>
-							{isLoading && (
-								<CircularProgress
-									sx={{ mr: 1, fontSize: '10px' }}
-									color='inherit'
-								/>
-							)}
-							login
+							{isLoading ? 'loggin in...' : 'login'}
 						</button>
-						{error && <p>{error}</p>}
+						{error && <Alert severity='error'>{error}</Alert>}
 					</form>
 					<p>
 						Not registered yet?{' '}

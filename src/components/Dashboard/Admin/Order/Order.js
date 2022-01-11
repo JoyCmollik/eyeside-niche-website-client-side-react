@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Avatar } from '@mui/material';
-import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const Order = ({ order, handleStatus, handleDeleteOrder }) => {
 	const {
 		_id,
-		user,
-		order_time,
-		order_product_quantity,
-		order_status,
-		order_product_title,
-		order_total_price,
+		user_name,
+		user_avatar,
+		user_uid,
+		orderedItems,
+		order_costing,
+		order_createdAt,
+		status,
+		payment,
 	} = order;
 
 	const handleStatusUpdate = (e) => {
@@ -19,24 +20,14 @@ const Order = ({ order, handleStatus, handleDeleteOrder }) => {
 		handleStatus(value, _id);
 	};
 
-	useEffect(() => {
-		AOS.init({
-			duration: 2000,
-		});
-	}, []);
-
 	return (
-		<tr
-			data-aos='fade-up'
-			data-aos-anchor-placement='top-bottom'
-			data-aos-delay='100'
-		>
+		<tr>
 			{/* order id plus time */}
 			<td className='px-6 py-4 whitespace-nowrap'>
 				<div className='text-sm text-gray-900'>{_id}</div>
 				<div className='text-sm text-gray-500'>
-					{new Date(order_time).toLocaleDateString()} (
-					{new Date(order_time).toLocaleTimeString()})
+					{new Date(order_createdAt).toLocaleDateString()} (
+					{new Date(order_createdAt).toLocaleTimeString()})
 				</div>
 			</td>
 			{/* user */}
@@ -44,40 +35,54 @@ const Order = ({ order, handleStatus, handleDeleteOrder }) => {
 				<div className='flex items-center'>
 					<div className='flex-shrink-0 h-10 w-10'>
 						<Avatar
-							alt={user.name}
-							src={user.user_img}
+							alt={user_name}
+							src={user_avatar}
 							sx={{ width: 40, height: 40 }}
 						/>
 					</div>
 					<div className='ml-4'>
 						<div className='text-sm font-medium text-gray-900'>
-							{user.name}
+							{user_name}
 						</div>
 						<div className='text-sm text-gray-500'>
-							{user.email}
+							#uid {user_uid}
 						</div>
 					</div>
 				</div>
 			</td>
-			{/* product name plus id */}
+			{/* payment status & quantity */}
 			<td className='px-6 py-4 whitespace-nowrap'>
-				<div className='text-sm text-gray-900'>
-					{order_product_title}
-				</div>
-				<div className='text-sm text-gray-500'>
-					Quantity: {order_product_quantity}
+				<div>
+					{payment ? (
+						<p className='px-4 py-1 text-xs bg-blue-100 text-blue-400 rounded-lg'>
+							payment received
+						</p>
+					) : (
+						<p className='px-4 py-1 text-xs bg-purple-100 text-purple-400 rounded-lg'>
+							payment pending
+						</p>
+					)}
 				</div>
 			</td>
 			{/* price */}
-			<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
-				${order_total_price}
+			<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500  flex flex-col items-start space-y-1'>
+				<p className='font-bold'>${order_costing.totalIncTax}</p>
+				<div className='text-sm text-gray-500'>
+					Quantity: {orderedItems.length}
+				</div>
 			</td>
 			{/* status */}
 			<td className='px-6 py-4 whitespace-nowrap'>
 				<select
 					onChange={handleStatusUpdate}
-					defaultValue={order_status}
-					className='pl-2 py-1 rounded-lg bg-green-100 text-green-700 outline-none'
+					defaultValue={status}
+					className={`pl-2 py-1 rounded-lg outline-none statusBackgrounds ${
+						(status === 'pending' && 'bg-yellow-100 text-yellow-700') ||
+						(status === 'approved' &&
+							'bg-green-100 text-green-700') ||
+						(status === 'processing' &&
+							'bg-indigo-100 text-indigo-700')
+					}`}
 				>
 					<option value='pending'>pending</option>
 					<option value='approved'>approved</option>

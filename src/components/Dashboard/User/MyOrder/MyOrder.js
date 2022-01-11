@@ -1,13 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const MyOrder = ({ myOrder, handleCancelOrder }) => {
 	const {
 		_id,
-		order_time,
-		order_product_quantity,
-		order_status,
+		order_createdAt,
+		orderedItems,
+		status,
 		order_product_title,
-		order_total_price,
+		order_costing,
 		payment,
 	} = myOrder;
 
@@ -22,54 +23,56 @@ const MyOrder = ({ myOrder, handleCancelOrder }) => {
 							order placed
 						</h5>
 						<p className='text-sm'>
-							{new Date(order_time).toLocaleDateString()}
+							{new Date(order_createdAt).toLocaleString()}
 						</p>
 					</div>
 					<div className=''>
 						<h5 className='uppercase text-sm text-gray-500 font-light'>
 							total price
 						</h5>
-						<p className='text-sm'>${order_total_price}</p>
+						<p className='text-sm'>${order_costing.totalIncTax}</p>
 					</div>
 				</div>
 				{/* right heading */}
-				<div className=''>
+				<div className='flex flex-col items-end space-y-2'>
 					<h5 className='text-sm text-gray-500 font-light'>
 						ORDER #{_id}
 					</h5>
+					<p className='text-xs px-4 py-1 bg-green-100 text-green-400 rounded-lg'>
+						{status}
+					</p>
 				</div>
 			</div>
 			{/* order item */}
-			<div className='pb-2 lg:pb-0 space-y-2 lg:space-y-0 lg:flex justify-between items-center bg-white rounded-lg shadow text-gray-500 px-2 border'>
+			<div className='py-2 space-y-2 lg:space-y-0 lg:flex justify-between items-center bg-white rounded-lg shadow text-gray-500 px-2 border'>
 				{/* detail */}
-				<div className='pb:2 lg:pb-0 space-y-2 lg:space-y-0 lg:flex items-center space-x-4'>
-					<img
-						className='object-cover h-28'
-						src='https://demo1leotheme.b-cdn.net/leo_oobliss_demo/84-home_default/brown-bear-printed-sweater.jpg'
-						alt='glass img'
-					/>
+				<div className='lg:pb-0 space-y-2 lg:space-y-0 lg:flex items-center space-x-4'>
 					<h5 className='text-lg'>{order_product_title}</h5>
-					<p>QTY: {order_product_quantity}</p>
+					<p>QTY: {orderedItems.length} items</p>
 				</div>
 				{/* actions */}
 				<div className='flex items-center space-x-4'>
 					<div>
 						{payment ? (
-							<p className='bg-green-100 text-green-500 rounded-lg px-4 py-2'>
-								paid
+							<p className='bg-blue-100 text-blue-500 text-sm rounded-lg px-4 py-2'>
+								payment confirmed
 							</p>
 						) : (
-							<p className='bg-purple-100 text-purple-500 rounded-lg px-4 py-2'>
-								payment pending
-							</p>
+							<Link to={`/dashboard/pay/${_id}`}>
+								<button className='capitalize bg-primary text-white rounded-lg px-4 py-2'>
+									proceed to pay
+								</button>
+							</Link>
 						)}
 					</div>
-					<button
-						onClick={() => handleCancelOrder(_id)}
-						className='bg-red-100 text-red-500 rounded-lg px-4 py-2'
-					>
-						Cancel
-					</button>
+					{!payment && (
+						<button
+							onClick={() => handleCancelOrder(_id)}
+							className='bg-red-100 text-red-500 rounded-lg px-4 py-2'
+						>
+							Cancel
+						</button>
+					)}
 				</div>
 			</div>
 		</div>

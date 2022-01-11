@@ -12,9 +12,9 @@ const useCart = () => {
 	const [isCartUpdated, setIsCartUpdated] = useState(true);
 
 	useEffect(() => {
-		if(isCartUpdated) {
+		if (isCartUpdated) {
 			const currCart = getCart();
-			console.log(currCart);
+
 			if (currCart) {
 				setItemCart(currCart);
 			}

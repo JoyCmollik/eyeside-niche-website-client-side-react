@@ -6,6 +6,7 @@ import useCart from '../../../../hooks/useCart';
 import useAxios from '../../../../hooks/useAxios';
 import { Link, useHistory } from 'react-router-dom';
 import useAuth from '../../../../hooks/useAuth';
+import { CircularProgress } from '@mui/material';
 
 const initialCartCosting = {
 	items: 0,
@@ -116,43 +117,59 @@ const Cart = () => {
 			});
 	};
 
+	if (!Object.keys(itemCart).length) {
+		return (
+			<div className='p-4 rounded-lg shadow border'>
+				<p>Your Cart Is Empty!</p>
+			</div>
+		);
+	}
+
 	return (
-		<div className='space-y-4 lg:space-y-0 lg:grid grid-cols-12 gap-4'>
-			{/* shopping items */}
-			<div className='col-span-8 space-y-4 mb-4'>
-				<div className='border rounded space-y-4'>
-					<h4 className='text-xl font-medium uppercase px-4 py-2 border-b'>
-						shopping cart
-					</h4>
-					<div className='space-y-8 w-full'>
-						{cartProducts &&
-							cartProducts.map((product) => (
-								<CartItem
-									key={product._id}
-									product={product}
-									handleProductQuantity={
-										handleProductQuantity
-									}
-								/>
-							))}
+		<>
+			{!cartProducts.length ? (
+				<div className='w-full flex justify-center items-center h-96'>
+					<CircularProgress color='inherit' />
+				</div>
+			) : (
+				<div className='space-y-4 lg:space-y-0 lg:grid grid-cols-12 gap-4'>
+					{/* shopping items */}
+					<div className='col-span-8 space-y-4 mb-4'>
+						<div className='border rounded space-y-4'>
+							<h4 className='text-xl font-medium uppercase px-4 py-2 border-b'>
+								shopping cart
+							</h4>
+							<div className='space-y-8 w-full'>
+								{cartProducts &&
+									cartProducts.map((product) => (
+										<CartItem
+											key={product._id}
+											product={product}
+											handleProductQuantity={
+												handleProductQuantity
+											}
+										/>
+									))}
+							</div>
+						</div>
+						<div>
+							<Link to='/explore'>
+								<button className='btn bg-black text-sm text-white space-x-1 flex items-center'>
+									<HiChevronLeft className='text-xl' />{' '}
+									<span>continue shopping</span>
+								</button>
+							</Link>
+						</div>
+					</div>
+					<div className='col-span-4 space-y-4'>
+						<CartCosting
+							cartCosting={cartCosting}
+							handlePlaceOrder={handlePlaceOrder}
+						/>
 					</div>
 				</div>
-				<div>
-					<Link to='/explore'>
-						<button className='btn bg-black text-sm text-white space-x-1 flex items-center'>
-							<HiChevronLeft className='text-xl' />{' '}
-							<span>continue shopping</span>
-						</button>
-					</Link>
-				</div>
-			</div>
-			<div className='col-span-4 space-y-4'>
-				<CartCosting
-					cartCosting={cartCosting}
-					handlePlaceOrder={handlePlaceOrder}
-				/>
-			</div>
-		</div>
+			)}
+		</>
 	);
 };
 

@@ -31,14 +31,13 @@ const ManageAllOrders = () => {
 
 				// calculating pending total
 				setPendingTotal(
-					orders.filter(
-						(orderItem) => orderItem.order_status === 'pending'
-					).length
+					orders.filter((orderItem) => orderItem.status === 'pending')
+						.length
 				);
 				// calculating approved total
 				setApprovedTotal(
 					orders.filter(
-						(orderItem) => orderItem.order_status === 'approved'
+						(orderItem) => orderItem.status === 'approved'
 					).length
 				);
 			})

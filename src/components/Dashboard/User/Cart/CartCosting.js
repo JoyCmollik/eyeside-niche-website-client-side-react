@@ -33,7 +33,7 @@ const CartCosting = ({ cartCosting, handlePlaceOrder }) => {
 					className='btn bg-black text-sm text-white'
 					disabled={!Boolean(items)}
 				>
-					proceed to checkout
+					confirm & proceed to checkout
 				</button>
 			</li>
 		</ul>
