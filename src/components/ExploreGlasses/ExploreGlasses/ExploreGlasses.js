@@ -3,6 +3,13 @@ import Product from '../../Home/Product/Product';
 import Footer from '../../Shared/Footer/Footer';
 import Header from '../../Shared/Header/Header';
 import useAxios from '../../../hooks/useAxios';
+import {
+	useTransition,
+	useChain,
+	animated,
+	useSpringRef,
+} from '@react-spring/web';
+import loading from '../../../images/1490.png';
 
 const categories = [
 	'All Glasses',
@@ -14,9 +21,21 @@ const categories = [
 ];
 
 const ExploreGlasses = () => {
-	const [products, setProducts] = useState(null);
+	const [products, setProducts] = useState([]);
 	const [category, setCategory] = useState('All Glasses');
 	const { client } = useAxios();
+
+	const transApi = useSpringRef();
+	const transition = useTransition(products ? products : [], {
+		ref: transApi,
+		trail: 400 / products.length,
+		from: { opacity: 0, scale: 0 },
+		enter: { opacity: 1, scale: 1 },
+		leave: { opacity: 0, scale: 0 },
+	});
+
+	// This will orchestrate the two animations above, comment the last arg and it creates a sequence
+	useChain([transApi], [0.4]);
 
 	useEffect(() => {
 		client.get('/products').then((response) => {
@@ -50,11 +69,23 @@ const ExploreGlasses = () => {
 							</div>
 						</div>
 					</div>
-					<div className='col-span-12 lg:col-span-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center'>
-						{products &&
-							products.map((product) => (
-								<Product key={product._id} product={product} />
-							))}
+					<div className='col-span-12 lg:col-span-10'>
+						{!products.length ? (
+							<div className='flex justify-center items-center h-screen'>
+								<img src={loading} alt='loading' />
+							</div>
+						) : (
+							<div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center'>
+								{transition((style, item) => (
+									<animated.div style={{ ...style }}>
+										<Product
+											key={item._id}
+											product={item}
+										/>
+									</animated.div>
+								))}
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

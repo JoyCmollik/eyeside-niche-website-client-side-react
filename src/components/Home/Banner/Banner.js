@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import AOS from 'aos';
 import { Link } from 'react-router-dom';
 
 const Banner = () => {

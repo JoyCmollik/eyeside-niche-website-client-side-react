@@ -102,23 +102,6 @@ const GlassDetailPage = () => {
 					</h5>
 					{/* desc */}
 					<p>{product && product.product_desc}</p>
-					{/* colors */}
-					<div className='flex space-x-4 items-center'>
-						<h5 className='text-lg'>COLOR</h5>
-						<div className='flex space-x-2'>
-							{product &&
-								product.product_colors.map((color, index) => (
-									<div
-										key={index}
-										className={`rounded-full p-0.5`}
-									>
-										<span
-											className={`block p-3 rounded-full ${color}`}
-										></span>
-									</div>
-								))}
-						</div>
-					</div>
 					{/* quantity */}
 					<div className='flex space-x-4 items-center'>
 						<h5 className='text-lg'>QUANTITY</h5>
@@ -168,13 +151,6 @@ const GlassDetailPage = () => {
 					</button>
 				</div>
 			</div>
-			{/* <OrderModal
-				isOrderOpen={isOrderOpen}
-				setIsOrderOpen={setIsOrderOpen}
-				selectedColor={selectedColor}
-				quantity={quantity}
-				product={product}
-			/> */}
 			<Footer />
 		</>
 	);

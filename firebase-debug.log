@@ -1,0 +1,36 @@
+[debug] [2022-01-11T17:21:03.386Z] ----------------------------------------------------------------------
+[debug] [2022-01-11T17:21:03.389Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\JoyCmollik\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2022-01-11T17:21:03.390Z] CLI Version:   9.20.0
+[debug] [2022-01-11T17:21:03.390Z] Platform:      win32
+[debug] [2022-01-11T17:21:03.390Z] Node Version:  v16.13.1
+[debug] [2022-01-11T17:21:03.398Z] Time:          Tue Jan 11 2022 23:21:03 GMT+0600 (Bangladesh Standard Time)
+[debug] [2022-01-11T17:21:03.399Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-01-11T17:21:03.467Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-01-11T17:21:03.468Z] > authorizing via signed-in user (joychandramollik.191.115.064@gmail.com)
+[debug] [2022-01-11T17:21:03.468Z] [iam] checking project eyeside-3712b for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-01-11T17:21:03.472Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/eyeside-3712b:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-01-11T17:21:14.676Z] [iam] error while checking permissions, command may fail: FirebaseError: Server Error. getaddrinfo ENOTFOUND cloudresourcemanager.googleapis.com
+[debug] [2022-01-11T17:21:14.679Z] > refreshing access token with scopes: []
+[debug] [2022-01-11T17:21:14.679Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2022-01-11T17:21:35.766Z] Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2022-01-11T17:21:56.975Z] FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+    at invalidCredentialError (C:\Users\JoyCmollik\AppData\Roaming\npm\node_modules\firebase-tools\lib\auth.js:141:12)
+    at refreshTokens (C:\Users\JoyCmollik\AppData\Roaming\npm\node_modules\firebase-tools\lib\auth.js:448:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async Client.getAccessToken (C:\Users\JoyCmollik\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:144:23)
+    at async Client.addAuthHeader (C:\Users\JoyCmollik\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:135:21)
+    at async Client.request (C:\Users\JoyCmollik\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:93:34)
+    at async Object.getFirebaseProject (C:\Users\JoyCmollik\AppData\Roaming\npm\node_modules\firebase-tools\lib\management\projects.js:290:21)
+    at async Object.getDefaultHostingSite (C:\Users\JoyCmollik\AppData\Roaming\npm\node_modules\firebase-tools\lib\getDefaultHostingSite.js:8:21)
+    at async requireHostingSite (C:\Users\JoyCmollik\AppData\Roaming\npm\node_modules\firebase-tools\lib\requireHostingSite.js:9:18)
+    at async Object.fn (C:\Users\JoyCmollik\AppData\Roaming\npm\node_modules\firebase-tools\lib\commands\deploy.js:65:9)
+    at async C:\Users\JoyCmollik\AppData\Roaming\npm\node_modules\firebase-tools\lib\command.js:188:17
+[error] 
+[error] Error: Failed to get Firebase project eyeside-3712b. Please make sure the project exists and your account has permission to access it.

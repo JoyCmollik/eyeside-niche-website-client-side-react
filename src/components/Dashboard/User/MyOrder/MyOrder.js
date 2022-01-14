@@ -38,7 +38,16 @@ const MyOrder = ({ myOrder, handleCancelOrder }) => {
 					<h5 className='text-sm text-gray-500 font-light'>
 						ORDER #{_id}
 					</h5>
-					<p className='text-xs px-4 py-1 bg-green-100 text-green-400 rounded-lg'>
+					<p
+						className={`text-xs px-4 py-1 rounded-lg outline-none ${
+							(status === 'pending' &&
+								'bg-yellow-100 text-yellow-700') ||
+							(status === 'approved' &&
+								'bg-green-100 text-green-700') ||
+							(status === 'processing' &&
+								'bg-indigo-100 text-indigo-700')
+						}`}
+					>
 						{status}
 					</p>
 				</div>

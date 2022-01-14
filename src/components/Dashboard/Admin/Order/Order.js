@@ -1,6 +1,5 @@
 import React from 'react';
 import { Avatar } from '@mui/material';
-import 'aos/dist/aos.css';
 
 const Order = ({ order, handleStatus, handleDeleteOrder }) => {
 	const {
@@ -76,8 +75,9 @@ const Order = ({ order, handleStatus, handleDeleteOrder }) => {
 				<select
 					onChange={handleStatusUpdate}
 					defaultValue={status}
-					className={`pl-2 py-1 rounded-lg outline-none statusBackgrounds ${
-						(status === 'pending' && 'bg-yellow-100 text-yellow-700') ||
+					className={`pl-2 py-1 rounded-lg outline-none ${
+						(status === 'pending' &&
+							'bg-yellow-100 text-yellow-700') ||
 						(status === 'approved' &&
 							'bg-green-100 text-green-700') ||
 						(status === 'processing' &&
