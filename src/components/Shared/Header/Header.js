@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import MobileNavbar from '../MobileNavbar/MobileNavbar';
 import { FiMenu } from 'react-icons/fi';
-import { HiOutlineShoppingCart } from 'react-icons/hi';
+import { RiShoppingCartLine } from 'react-icons/ri';
 import { Avatar } from '@mui/material';
 import useCart from '../../../hooks/useCart';
 
@@ -25,6 +25,7 @@ const Header = () => {
 					setIsDrawerOpen={setIsDrawerOpen}
 				/>
 			</div>
+
 			{/* hamburger */}
 			<button
 				className='text-primary text-2xl p-1 border border-primary rounded md:hidden'
@@ -39,23 +40,26 @@ const Header = () => {
 			{/* links */}
 			<div className='hidden md:flex space-x-4 items-center'>
 				<NavLink
-					className='transition duration-300 transform hover:text-primary hover:-translate-y-px'
+					className='navlink transition duration-300 transform hover:text-primary flex flex-col space-y-1'
 					to='/home'
 				>
-					Home
+					<span> Home</span>
+					<div className='navlink-border bg-primary' />
 				</NavLink>
 				<NavLink
-					className='transition duration-300 transform hover:text-primary hover:-translate-y-px'
+					className='navlink transition duration-300 transform hover:text-primary flex flex-col space-y-1'
 					to='/explore'
 				>
-					Explore Glasses
+					<span> Explore Glasses</span>
+					<div className='navlink-border bg-primary' />
 				</NavLink>
 				{user && (
 					<NavLink
-						className='transition duration-100 transform hover:text-primary hover:-translate-y-px'
+						className='navlink transition duration-300 transform hover:text-primary flex flex-col space-y-1'
 						to='/dashboard'
 					>
-						Dashboard
+						<span> Dashboard</span>
+						<div className='navlink-border bg-primary' />
 					</NavLink>
 				)}
 			</div>
@@ -69,7 +73,7 @@ const Header = () => {
 									{Object.keys(itemCart).length}
 								</span>
 							</p>
-							<HiOutlineShoppingCart className='text-2xl' />
+							<RiShoppingCartLine className='text-2xl text-gray-700' />
 						</button>
 					</Link>
 				)}

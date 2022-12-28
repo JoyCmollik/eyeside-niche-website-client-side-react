@@ -6,7 +6,7 @@ import useCart from '../../../../hooks/useCart';
 import useAxios from '../../../../hooks/useAxios';
 import { Link, useHistory } from 'react-router-dom';
 import useAuth from '../../../../hooks/useAuth';
-import { CircularProgress } from '@mui/material';
+import loading from '../../../../images/1490.png';
 
 const initialCartCosting = {
 	items: 0,
@@ -81,7 +81,7 @@ const Cart = () => {
 			Number(newCartCosting.totalExcTax) + Number(newCartCosting.taxes)
 		).toPrecision(4);
 
-		setCartCosting(() => newCartCosting);
+		setCartCosting(newCartCosting);
 	};
 
 	const handlePlaceOrder = () => {
@@ -93,6 +93,7 @@ const Cart = () => {
 			return currItem;
 		});
 
+		// creating order object
 		const order = {
 			orderedItems,
 			user_uid: user.uid,
@@ -103,6 +104,7 @@ const Cart = () => {
 			status: 'pending',
 		};
 
+		// placing order to the server
 		client
 			.post('order', order)
 			.then((response) => {
@@ -129,7 +131,7 @@ const Cart = () => {
 		<>
 			{!cartProducts.length ? (
 				<div className='w-full flex justify-center items-center h-96'>
-					<CircularProgress color='inherit' />
+					<img src={loading} alt='loading icon' />
 				</div>
 			) : (
 				<div className='space-y-4 lg:space-y-0 lg:grid grid-cols-12 gap-4'>

@@ -3,7 +3,7 @@ import useAuth from '../../../../hooks/useAuth';
 import useAxios from '../../../../hooks/useAxios';
 import MyOrder from '../MyOrder/MyOrder';
 import ConfirmDialog from '../../../Shared/ConfirmDialog/ConfirmDialog';
-import { CircularProgress } from '@mui/material';
+import loading from '../../../../images/1490.png';
 
 const MyOrders = () => {
 	const [myOrders, setMyOrders] = useState([]);
@@ -64,7 +64,7 @@ const MyOrders = () => {
 				) : (
 					<div className='w-full flex justify-center items-center h-96'>
 						{!isNoOrder ? (
-							<CircularProgress color='inherit' />
+							<img src={loading} alt='loading icon' />
 						) : (
 							<p className='flex-grow self-start p-4 bg-red-100 text-red-500 rounded-lg'>
 								You haven't ordered anything yet!

@@ -4,14 +4,16 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				primary: '#ECBA78',
+				primary: '#963779',
 				brand: '#FF0000',
 				light: '#F6F9FC',
 			},
 		},
 	},
 	variants: {
-		extend: {},
+		extend: {
+			divideColor: ['group-hover'],
+		},
 	},
 	plugins: [],
 };

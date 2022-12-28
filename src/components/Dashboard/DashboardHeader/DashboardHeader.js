@@ -27,12 +27,12 @@ const DashboardHeader = ({ isDrawerOpen, setIsDrawerOpen }) => {
 					<BsSearch />
 				</button>
 			</div>
-			<div className='flex items-center space-x-2'>
+			<div className='flex items-center space-x-2 p-2 border rounded-lg shadow'>
 				<h5 className='font-light text-sm'>{user?.displayName}</h5>
 				<Avatar
 					alt={user?.name}
 					src={user?.photoURL}
-					sx={{ width: 40, height: 40 }}
+					sx={{ width: 25, height: 25 }}
 				/>
 			</div>
 		</div>

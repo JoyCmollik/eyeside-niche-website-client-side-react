@@ -26,3 +26,15 @@ h4,
 .modal-input {
 	@apply border px-4 py-2 rounded-lg text-gray-500 focus-within:text-black outline-none focus:ring-2 focus:ring-primary;
 }
+
+.navlink .navlink-border {
+	padding: 1px 0;
+	width: 80%;
+	margin: 0 auto;
+	transform: scale(0);
+	transition: all 0.4s ease-in-out;
+}
+
+.navlink:hover .navlink-border {
+	transform: scale(1);
+}

@@ -25,6 +25,7 @@ const ExploreGlasses = () => {
 	const [category, setCategory] = useState('All Glasses');
 	const { client } = useAxios();
 
+	// react spring animation functions
 	const transApi = useSpringRef();
 	const transition = useTransition(products ? products : [], {
 		ref: transApi,
@@ -37,6 +38,7 @@ const ExploreGlasses = () => {
 	// This will orchestrate the two animations above, comment the last arg and it creates a sequence
 	useChain([transApi], [0.4]);
 
+	// calling api to fetch all the products
 	useEffect(() => {
 		client.get('/products').then((response) => {
 			setProducts(response.data);

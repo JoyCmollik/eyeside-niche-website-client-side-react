@@ -87,9 +87,9 @@ const Footer = () => {
 					<h5 className='font-light'>GET UPDATES</h5>
 					<div className='flex flex-col space-y-2 text-gray-500 text-sm'>
 						<p>Get eyeSide news updates & offers</p>
-						<div className='rounded-3xl border flex justify-between'>
+						<div className='rounded-3xl flex justify-between bg-white overflow-hidden shadow'>
 							<input
-								className='px-2 py-3  outline-none bg-white'
+								className='px-4 py-3 w-full outline-none'
 								type='email'
 								placeholder='Email address....'
 							/>
